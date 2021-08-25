@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.jdm.superherosightings.entities;
 
 import java.util.List;
@@ -15,35 +9,44 @@ import java.util.Objects;
  * @email joedmcadams@gmail.com
  * 
  */
-public class Villain {
-    private int villainId;
-    private String villainName, villainDesc;
+public class HeroVillain {
+    private int heroVillainId;
+    private String name, description;
+    private boolean villain;
     private List<Organization> organizations;
     private List<Power> powers;
-    private List<VillainSighting> sightings;
+    private List<Sighting> sightings;
 
-    public int getVillainId() {
-        return villainId;
+    public int getHeroVillainId() {
+        return heroVillainId;
     }
 
-    public void setVillainId(int villainId) {
-        this.villainId = villainId;
+    public void setHeroVillainId(int heroVillainId) {
+        this.heroVillainId = heroVillainId;
     }
 
-    public String getVillainName() {
-        return villainName;
+    public String getName() {
+        return name;
     }
 
-    public void setVillainName(String villainName) {
-        this.villainName = villainName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getVillainDesc() {
-        return villainDesc;
+    public String getDescription() {
+        return description;
     }
 
-    public void setVillainDesc(String villainDesc) {
-        this.villainDesc = villainDesc;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public boolean isVillain() {
+        return villain;
+    }
+
+    public void setVillain(boolean villain) {
+        this.villain = villain;
     }
 
     public List<Organization> getOrganizations() {
@@ -62,20 +65,21 @@ public class Villain {
         this.powers = powers;
     }
 
-    public List<VillainSighting> getSightings() {
+    public List<Sighting> getSightings() {
         return sightings;
     }
 
-    public void setSightings(List<VillainSighting> sightings) {
+    public void setSightings(List<Sighting> sightings) {
         this.sightings = sightings;
     }
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 67 * hash + this.villainId;
-        hash = 67 * hash + Objects.hashCode(this.villainName);
-        hash = 67 * hash + Objects.hashCode(this.villainDesc);
+        int hash = 7;
+        hash = 67 * hash + this.heroVillainId;
+        hash = 67 * hash + Objects.hashCode(this.name);
+        hash = 67 * hash + Objects.hashCode(this.description);
+        hash = 67 * hash + (this.villain ? 1 : 0);
         hash = 67 * hash + Objects.hashCode(this.organizations);
         hash = 67 * hash + Objects.hashCode(this.powers);
         hash = 67 * hash + Objects.hashCode(this.sightings);
@@ -93,14 +97,17 @@ public class Villain {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Villain other = (Villain) obj;
-        if (this.villainId != other.villainId) {
+        final HeroVillain other = (HeroVillain) obj;
+        if (this.heroVillainId != other.heroVillainId) {
             return false;
         }
-        if (!Objects.equals(this.villainName, other.villainName)) {
+        if (this.villain != other.villain) {
             return false;
         }
-        if (!Objects.equals(this.villainDesc, other.villainDesc)) {
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        if (!Objects.equals(this.description, other.description)) {
             return false;
         }
         if (!Objects.equals(this.organizations, other.organizations)) {
@@ -115,5 +122,6 @@ public class Villain {
         return true;
     }
 
-   
+
+    
 }

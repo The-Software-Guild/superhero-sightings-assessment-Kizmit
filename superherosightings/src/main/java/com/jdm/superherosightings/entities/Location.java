@@ -19,8 +19,8 @@ import java.util.Objects;
  */
 public class Location {
     private int locationId;
-    private String locationName, locationCity, locationState, locationAddress, locationCoord, locationDesc;
-    private List<HeroSighting> sightings;
+    private String name, city, state, address, coordinates, description;
+    private List<Sighting> sightings;
     
 
     public int getLocationId() {
@@ -31,59 +31,59 @@ public class Location {
         this.locationId = locationId;
     }
 
-    public String getLocationName() {
-        return locationName;
+    public String getName() {
+        return name;
     }
 
-    public void setLocationName(String locationName) {
-        this.locationName = locationName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getLocationCity() {
-        return locationCity;
+    public String getCity() {
+        return city;
     }
 
-    public void setLocationCity(String locationCity) {
-        this.locationCity = locationCity;
+    public void setCity(String city) {
+        this.city = city;
     }
 
-    public String getLocationState() {
-        return locationState;
+    public String getState() {
+        return state;
     }
 
-    public void setLocationState(String locationState) {
-        this.locationState = locationState;
+    public void setState(String state) {
+        this.state = state;
     }
 
-    public String getLocationAddress() {
-        return locationAddress;
+    public String getAddress() {
+        return address;
     }
 
-    public void setLocationAddress(String locationAddress) {
-        this.locationAddress = locationAddress;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public String getLocationCoord() {
-        return locationCoord;
+    public String getCoordinates() {
+        return coordinates;
     }
 
-    public void setLocationCoord(String locationCoord) {
-        this.locationCoord = locationCoord;
+    public void setCoordinates(String coordinates) {
+        this.coordinates = coordinates;
     }
 
-    public String getLocationDesc() {
-        return locationDesc;
+    public String getDescription() {
+        return description;
     }
 
-    public void setLocationDesc(String locationDesc) {
-        this.locationDesc = locationDesc;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public List<HeroSighting> getSightings() {
+    public List<Sighting> getSightings() {
         return sightings;
     }
 
-    public void setSightings(List<HeroSighting> sightings) {
+    public void setSightings(List<Sighting> sightings) {
         this.sightings = sightings;
     }
 
@@ -91,12 +91,12 @@ public class Location {
     public int hashCode() {
         int hash = 7;
         hash = 83 * hash + this.locationId;
-        hash = 83 * hash + Objects.hashCode(this.locationName);
-        hash = 83 * hash + Objects.hashCode(this.locationCity);
-        hash = 83 * hash + Objects.hashCode(this.locationState);
-        hash = 83 * hash + Objects.hashCode(this.locationAddress);
-        hash = 83 * hash + Objects.hashCode(this.locationCoord);
-        hash = 83 * hash + Objects.hashCode(this.locationDesc);
+        hash = 83 * hash + Objects.hashCode(this.name);
+        hash = 83 * hash + Objects.hashCode(this.city);
+        hash = 83 * hash + Objects.hashCode(this.state);
+        hash = 83 * hash + Objects.hashCode(this.address);
+        hash = 83 * hash + Objects.hashCode(this.coordinates);
+        hash = 83 * hash + Objects.hashCode(this.description);
         hash = 83 * hash + Objects.hashCode(this.sightings);
         return hash;
     }
@@ -116,22 +116,22 @@ public class Location {
         if (this.locationId != other.locationId) {
             return false;
         }
-        if (!Objects.equals(this.locationName, other.locationName)) {
+        if (!Objects.equals(this.name, other.name)) {
             return false;
         }
-        if (!Objects.equals(this.locationCity, other.locationCity)) {
+        if (!Objects.equals(this.city, other.city)) {
             return false;
         }
-        if (!Objects.equals(this.locationState, other.locationState)) {
+        if (!Objects.equals(this.state, other.state)) {
             return false;
         }
-        if (!Objects.equals(this.locationAddress, other.locationAddress)) {
+        if (!Objects.equals(this.address, other.address)) {
             return false;
         }
-        if (!Objects.equals(this.locationCoord, other.locationCoord)) {
+        if (!Objects.equals(this.coordinates, other.coordinates)) {
             return false;
         }
-        if (!Objects.equals(this.locationDesc, other.locationDesc)) {
+        if (!Objects.equals(this.description, other.description)) {
             return false;
         }
         if (!Objects.equals(this.sightings, other.sightings)) {

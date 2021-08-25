@@ -6,9 +6,12 @@
 
 package com.jdm.superherosightings.dao;
 
-import com.jdm.superherosightings.entities.HeroSighting;
+import com.jdm.superherosightings.entities.Sighting;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 
 /**
@@ -18,31 +21,42 @@ import org.springframework.stereotype.Repository;
  * 
  */
 @Repository
-public class HeroSightingDaoDbImpl implements HeroSightingDao {
+public class SightingDaoDbImpl implements SightingDao {
+    
+    @Autowired
+    JdbcTemplate jdbc;
 
     @Override
-    public HeroSighting getHeroSightingById(int heroSightingId) {
+    public Sighting getSightingById(int heroSightingId) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<HeroSighting> getAllHeroSightings() {
+    public List<Sighting> getAllHeroSightings() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public HeroSighting addHeroSighting(HeroSighting heroSighting) {
+    public List<Sighting> getAllVillainSightings() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void deleteHeroSightingById(int heroSightingId) {
+    @Transactional
+    public Sighting addSighting(Sighting heroSighting) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void editHeroSighting(HeroSighting heroSighting) {
+    @Transactional
+    public void deleteSightingById(int heroSightingId) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public void editSighting(Sighting heroSighting) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
 
 }

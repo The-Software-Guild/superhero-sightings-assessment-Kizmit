@@ -16,11 +16,19 @@ import java.util.Objects;
  * @email joedmcadams@gmail.com
  * 
  */
-public class HeroSighting {
-    private int sightingId;
-    private Hero hero;
+public class Sighting {
+    private int sightingId, heroVillainId;
+    private HeroVillain heroVillain;
     private Location location;
     private Timestamp sightingTime;
+
+    public int getHeroVillainId() {
+        return heroVillainId;
+    }
+
+    public void setHeroVillainId(int heroVillainId) {
+        this.heroVillainId = heroVillainId;
+    }
 
     public int getSightingId() {
         return sightingId;
@@ -30,12 +38,12 @@ public class HeroSighting {
         this.sightingId = sightingId;
     }
 
-    public Hero getHero() {
-        return hero;
+    public HeroVillain getHeroVillain() {
+        return heroVillain;
     }
 
-    public void setHero(Hero hero) {
-        this.hero = hero;
+    public void setHeroVillain(HeroVillain heroVillain) {
+        this.heroVillain = heroVillain;
     }
 
     public Location getLocation() {
@@ -56,11 +64,12 @@ public class HeroSighting {
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 17 * hash + this.sightingId;
-        hash = 17 * hash + Objects.hashCode(this.hero);
-        hash = 17 * hash + Objects.hashCode(this.location);
-        hash = 17 * hash + Objects.hashCode(this.sightingTime);
+        int hash = 7;
+        hash = 37 * hash + this.sightingId;
+        hash = 37 * hash + this.heroVillainId;
+        hash = 37 * hash + Objects.hashCode(this.heroVillain);
+        hash = 37 * hash + Objects.hashCode(this.location);
+        hash = 37 * hash + Objects.hashCode(this.sightingTime);
         return hash;
     }
 
@@ -75,11 +84,14 @@ public class HeroSighting {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final HeroSighting other = (HeroSighting) obj;
+        final Sighting other = (Sighting) obj;
         if (this.sightingId != other.sightingId) {
             return false;
         }
-        if (!Objects.equals(this.hero, other.hero)) {
+        if (this.heroVillainId != other.heroVillainId) {
+            return false;
+        }
+        if (!Objects.equals(this.heroVillain, other.heroVillain)) {
             return false;
         }
         if (!Objects.equals(this.location, other.location)) {
@@ -90,6 +102,8 @@ public class HeroSighting {
         }
         return true;
     }
+
+
     
     
 }

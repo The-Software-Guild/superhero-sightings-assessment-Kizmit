@@ -7,14 +7,14 @@ import java.util.Objects;
  *
  * @author Joe McAdams
  * @email joedmcadams@gmail.com
- * 
+ *
  */
 public class Organization {
-    private int organizationId;
-    private Location location;
-    private String organizationName, organizationType, organizationDesc, organizationPhone;
-    private List<Hero> heroes;
-    private List<Villain> villains;
+
+    private int organizationId, locationId;
+
+    private String name, type, description, phone;
+    private List<HeroVillain> members;
 
     public int getOrganizationId() {
         return organizationId;
@@ -24,73 +24,64 @@ public class Organization {
         this.organizationId = organizationId;
     }
 
-    public Location getLocation() {
-        return location;
+    public int getLocationId() {
+        return locationId;
     }
 
-    public void setLocation(Location location) {
-        this.location = location;
+    public void setLocationId(int locationId) {
+        this.locationId = locationId;
     }
 
-    public String getOrganizationName() {
-        return organizationName;
+    public String getName() {
+        return name;
     }
 
-    public void setOrganizationName(String organizationName) {
-        this.organizationName = organizationName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getOrganizationType() {
-        return organizationType;
+    public String getType() {
+        return type;
     }
 
-    public void setOrganizationType(String organizationType) {
-        this.organizationType = organizationType;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public String getOrganizationDesc() {
-        return organizationDesc;
+    public String getDescription() {
+        return description;
     }
 
-    public void setOrganizationDesc(String organizationDesc) {
-        this.organizationDesc = organizationDesc;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getOrganizationPhone() {
-        return organizationPhone;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setOrganizationPhone(String organizationPhone) {
-        this.organizationPhone = organizationPhone;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    public List<Hero> getHeroes() {
-        return heroes;
+    public List<HeroVillain> getMembers() {
+        return members;
     }
 
-    public void setHeroes(List<Hero> heroes) {
-        this.heroes = heroes;
-    }
-
-    public List<Villain> getVillains() {
-        return villains;
-    }
-
-    public void setVillains(List<Villain> villains) {
-        this.villains = villains;
+    public void setMembers(List<HeroVillain> members) {
+        this.members = members;
     }
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 13 * hash + this.organizationId;
-        hash = 13 * hash + Objects.hashCode(this.location);
-        hash = 13 * hash + Objects.hashCode(this.organizationName);
-        hash = 13 * hash + Objects.hashCode(this.organizationType);
-        hash = 13 * hash + Objects.hashCode(this.organizationDesc);
-        hash = 13 * hash + Objects.hashCode(this.organizationPhone);
-        hash = 13 * hash + Objects.hashCode(this.heroes);
-        hash = 13 * hash + Objects.hashCode(this.villains);
+        int hash = 7;
+        hash = 31 * hash + this.organizationId;
+        hash = 31 * hash + this.locationId;
+        hash = 31 * hash + Objects.hashCode(this.name);
+        hash = 31 * hash + Objects.hashCode(this.type);
+        hash = 31 * hash + Objects.hashCode(this.description);
+        hash = 31 * hash + Objects.hashCode(this.phone);
+        hash = 31 * hash + Objects.hashCode(this.members);
         return hash;
     }
 
@@ -109,29 +100,25 @@ public class Organization {
         if (this.organizationId != other.organizationId) {
             return false;
         }
-        if (!Objects.equals(this.organizationName, other.organizationName)) {
+        if (this.locationId != other.locationId) {
             return false;
         }
-        if (!Objects.equals(this.organizationType, other.organizationType)) {
+        if (!Objects.equals(this.name, other.name)) {
             return false;
         }
-        if (!Objects.equals(this.organizationDesc, other.organizationDesc)) {
+        if (!Objects.equals(this.type, other.type)) {
             return false;
         }
-        if (!Objects.equals(this.organizationPhone, other.organizationPhone)) {
+        if (!Objects.equals(this.description, other.description)) {
             return false;
         }
-        if (!Objects.equals(this.location, other.location)) {
+        if (!Objects.equals(this.phone, other.phone)) {
             return false;
         }
-        if (!Objects.equals(this.heroes, other.heroes)) {
-            return false;
-        }
-        if (!Objects.equals(this.villains, other.villains)) {
+        if (!Objects.equals(this.members, other.members)) {
             return false;
         }
         return true;
     }
-
 
 }

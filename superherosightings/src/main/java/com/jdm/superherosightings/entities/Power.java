@@ -16,7 +16,7 @@ import java.util.Objects;
  */
 public class Power {
     private int powerId;
-    private String powerName, powerDesc;
+    private String name, description;
 
     public int getPowerId() {
         return powerId;
@@ -26,28 +26,28 @@ public class Power {
         this.powerId = powerId;
     }
 
-    public String getPowerName() {
-        return powerName;
+    public String getName() {
+        return name;
     }
 
-    public void setPowerName(String powerName) {
-        this.powerName = powerName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getPowerDesc() {
-        return powerDesc;
+    public String getDescription() {
+        return description;
     }
 
-    public void setPowerDesc(String powerDesc) {
-        this.powerDesc = powerDesc;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
         hash = 37 * hash + this.powerId;
-        hash = 37 * hash + Objects.hashCode(this.powerName);
-        hash = 37 * hash + Objects.hashCode(this.powerDesc);
+        hash = 37 * hash + Objects.hashCode(this.name);
+        hash = 37 * hash + Objects.hashCode(this.description);
         return hash;
     }
 
@@ -66,10 +66,10 @@ public class Power {
         if (this.powerId != other.powerId) {
             return false;
         }
-        if (!Objects.equals(this.powerName, other.powerName)) {
+        if (!Objects.equals(this.name, other.name)) {
             return false;
         }
-        if (!Objects.equals(this.powerDesc, other.powerDesc)) {
+        if (!Objects.equals(this.description, other.description)) {
             return false;
         }
         return true;
