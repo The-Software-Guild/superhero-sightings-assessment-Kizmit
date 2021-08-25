@@ -6,8 +6,10 @@
 
 package com.jdm.superherosightings.entities;
 
-import java.util.Arrays;
+
+import java.util.List;
 import java.util.Objects;
+
 
 /**
  *
@@ -18,7 +20,8 @@ import java.util.Objects;
 public class Location {
     private int locationId;
     private String locationName, locationCity, locationState, locationAddress, locationCoord, locationDesc;
-    private HeroSighting sightings[];
+    private List<HeroSighting> sightings;
+    
 
     public int getLocationId() {
         return locationId;
@@ -76,25 +79,25 @@ public class Location {
         this.locationDesc = locationDesc;
     }
 
-    public HeroSighting[] getSightings() {
+    public List<HeroSighting> getSightings() {
         return sightings;
     }
 
-    public void setSightings(HeroSighting[] sightings) {
+    public void setSightings(List<HeroSighting> sightings) {
         this.sightings = sightings;
     }
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 47 * hash + this.locationId;
-        hash = 47 * hash + Objects.hashCode(this.locationName);
-        hash = 47 * hash + Objects.hashCode(this.locationCity);
-        hash = 47 * hash + Objects.hashCode(this.locationState);
-        hash = 47 * hash + Objects.hashCode(this.locationAddress);
-        hash = 47 * hash + Objects.hashCode(this.locationCoord);
-        hash = 47 * hash + Objects.hashCode(this.locationDesc);
-        hash = 47 * hash + Arrays.deepHashCode(this.sightings);
+        int hash = 7;
+        hash = 83 * hash + this.locationId;
+        hash = 83 * hash + Objects.hashCode(this.locationName);
+        hash = 83 * hash + Objects.hashCode(this.locationCity);
+        hash = 83 * hash + Objects.hashCode(this.locationState);
+        hash = 83 * hash + Objects.hashCode(this.locationAddress);
+        hash = 83 * hash + Objects.hashCode(this.locationCoord);
+        hash = 83 * hash + Objects.hashCode(this.locationDesc);
+        hash = 83 * hash + Objects.hashCode(this.sightings);
         return hash;
     }
 
@@ -131,11 +134,11 @@ public class Location {
         if (!Objects.equals(this.locationDesc, other.locationDesc)) {
             return false;
         }
-        if (!Arrays.deepEquals(this.sightings, other.sightings)) {
+        if (!Objects.equals(this.sightings, other.sightings)) {
             return false;
         }
         return true;
     }
-    
+
     
 }

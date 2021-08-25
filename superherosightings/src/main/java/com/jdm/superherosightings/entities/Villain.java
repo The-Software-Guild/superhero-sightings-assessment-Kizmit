@@ -6,7 +6,7 @@
 
 package com.jdm.superherosightings.entities;
 
-import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -18,9 +18,9 @@ import java.util.Objects;
 public class Villain {
     private int villainId;
     private String villainName, villainDesc;
-    private Organization organizations[];
-    private Power powers[];
-    private VillainSighting sightings[];
+    private List<Organization> organizations;
+    private List<Power> powers;
+    private List<VillainSighting> sightings;
 
     public int getVillainId() {
         return villainId;
@@ -46,39 +46,39 @@ public class Villain {
         this.villainDesc = villainDesc;
     }
 
-    public Organization[] getOrganizations() {
+    public List<Organization> getOrganizations() {
         return organizations;
     }
 
-    public void setOrganizations(Organization[] organizations) {
+    public void setOrganizations(List<Organization> organizations) {
         this.organizations = organizations;
     }
 
-    public Power[] getPowers() {
+    public List<Power> getPowers() {
         return powers;
     }
 
-    public void setPowers(Power[] powers) {
+    public void setPowers(List<Power> powers) {
         this.powers = powers;
     }
 
-    public VillainSighting[] getSightings() {
+    public List<VillainSighting> getSightings() {
         return sightings;
     }
 
-    public void setSightings(VillainSighting[] sightings) {
+    public void setSightings(List<VillainSighting> sightings) {
         this.sightings = sightings;
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 83 * hash + this.villainId;
-        hash = 83 * hash + Objects.hashCode(this.villainName);
-        hash = 83 * hash + Objects.hashCode(this.villainDesc);
-        hash = 83 * hash + Arrays.deepHashCode(this.organizations);
-        hash = 83 * hash + Arrays.deepHashCode(this.powers);
-        hash = 83 * hash + Arrays.deepHashCode(this.sightings);
+        int hash = 3;
+        hash = 67 * hash + this.villainId;
+        hash = 67 * hash + Objects.hashCode(this.villainName);
+        hash = 67 * hash + Objects.hashCode(this.villainDesc);
+        hash = 67 * hash + Objects.hashCode(this.organizations);
+        hash = 67 * hash + Objects.hashCode(this.powers);
+        hash = 67 * hash + Objects.hashCode(this.sightings);
         return hash;
     }
 
@@ -103,17 +103,17 @@ public class Villain {
         if (!Objects.equals(this.villainDesc, other.villainDesc)) {
             return false;
         }
-        if (!Arrays.deepEquals(this.organizations, other.organizations)) {
+        if (!Objects.equals(this.organizations, other.organizations)) {
             return false;
         }
-        if (!Arrays.deepEquals(this.powers, other.powers)) {
+        if (!Objects.equals(this.powers, other.powers)) {
             return false;
         }
-        if (!Arrays.deepEquals(this.sightings, other.sightings)) {
+        if (!Objects.equals(this.sightings, other.sightings)) {
             return false;
         }
         return true;
     }
-    
-    
+
+   
 }

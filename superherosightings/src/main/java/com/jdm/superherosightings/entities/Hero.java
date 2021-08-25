@@ -1,6 +1,6 @@
 package com.jdm.superherosightings.entities;
 
-import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -12,9 +12,9 @@ import java.util.Objects;
 public class Hero {
     private int heroId;
     private String heroName, heroDesc;
-    private Organization organizations[];
-    private Power powers[];
-    private HeroSighting sightings[];
+    private List<Organization> organizations;
+    private List<Power> powers;
+    private List<HeroSighting> sightings;
 
     public int getHeroId() {
         return heroId;
@@ -40,39 +40,39 @@ public class Hero {
         this.heroDesc = heroDesc;
     }
 
-    public Organization[] getOrganizations() {
+    public List<Organization> getOrganizations() {
         return organizations;
     }
 
-    public void setOrganizations(Organization[] organizations) {
+    public void setOrganizations(List<Organization> organizations) {
         this.organizations = organizations;
     }
 
-    public Power[] getPowers() {
+    public List<Power> getPowers() {
         return powers;
     }
 
-    public void setPowers(Power[] powers) {
+    public void setPowers(List<Power> powers) {
         this.powers = powers;
     }
 
-    public HeroSighting[] getSightings() {
+    public List<HeroSighting> getSightings() {
         return sightings;
     }
 
-    public void setSightings(HeroSighting[] sightings) {
+    public void setSightings(List<HeroSighting> sightings) {
         this.sightings = sightings;
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 29 * hash + this.heroId;
-        hash = 29 * hash + Objects.hashCode(this.heroName);
-        hash = 29 * hash + Objects.hashCode(this.heroDesc);
-        hash = 29 * hash + Arrays.deepHashCode(this.organizations);
-        hash = 29 * hash + Arrays.deepHashCode(this.powers);
-        hash = 29 * hash + Arrays.deepHashCode(this.sightings);
+        hash = 23 * hash + this.heroId;
+        hash = 23 * hash + Objects.hashCode(this.heroName);
+        hash = 23 * hash + Objects.hashCode(this.heroDesc);
+        hash = 23 * hash + Objects.hashCode(this.organizations);
+        hash = 23 * hash + Objects.hashCode(this.powers);
+        hash = 23 * hash + Objects.hashCode(this.sightings);
         return hash;
     }
 
@@ -97,17 +97,17 @@ public class Hero {
         if (!Objects.equals(this.heroDesc, other.heroDesc)) {
             return false;
         }
-        if (!Arrays.deepEquals(this.organizations, other.organizations)) {
+        if (!Objects.equals(this.organizations, other.organizations)) {
             return false;
         }
-        if (!Arrays.deepEquals(this.powers, other.powers)) {
+        if (!Objects.equals(this.powers, other.powers)) {
             return false;
         }
-        if (!Arrays.deepEquals(this.sightings, other.sightings)) {
+        if (!Objects.equals(this.sightings, other.sightings)) {
             return false;
         }
         return true;
     }
-    
+
     
 }
