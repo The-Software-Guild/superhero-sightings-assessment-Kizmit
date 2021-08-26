@@ -53,15 +53,16 @@ public class SightingDaoDbImpl implements SightingDao {
     @Override
     public List<Sighting> getAllVillainSightings() {  
         final String GET_ALL_SIGHTINGS = "SELECT * FROM sighting s JOIN superperson sp ON s.superPersonId = sp.superPersonId WHERE sp.isVillain = ?";
-        return jdbc.query(GET_ALL_SIGHTINGS, new SightingMapper(), true);    
+        List<Sighting> sightings = jdbc.query(GET_ALL_SIGHTINGS, new SightingMapper(), true); 
+        return sightings;  
     }
     
     @Override
-    public List<Sighting> getAllSightingsAtLocationDate(int locationId, LocalDate date) { //Not testewd
-        final String GET_SIGHTINGS_LOCATIONDATE = "SELECT * FROM sighting s "
+    public List<Sighting> getAllSightingsAtLocationDate(int locationId, LocalDate date) { //Broken
+        final String GET_SIGHTINGS_LOCATIONDATE = "SELECT s.sightingId, s.superPersonId, s.locationId, s.sightingTime FROM sighting s "
                 + "JOIN superperson sp ON s.superPersonId = sp.superPersonId "
-                + "JOIN location l ON l.locationId = s.locationId"
-                + "WHERE l.locationId = ? AND s.sightingTime = ?";
+                + "JOIN location l ON l.locationId = s.locationId "
+                + "WHERE l.locationId = ? AND CAST(s.sightingTime AS DATE) = ?";
         return jdbc.query(GET_SIGHTINGS_LOCATIONDATE, new SightingMapper(), locationId, date);
     }
 

@@ -15,7 +15,6 @@ public class SuperPerson {
     private boolean villain;
     private List<Organization> organizations;
     private List<Power> powers;
-    private List<Sighting> sightings;
 
     public int getSuperPersonId() {
         return superPersonId;
@@ -65,24 +64,15 @@ public class SuperPerson {
         this.powers = powers;
     }
 
-    public List<Sighting> getSightings() {
-        return sightings;
-    }
-
-    public void setSightings(List<Sighting> sightings) {
-        this.sightings = sightings;
-    }
-
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 67 * hash + this.superPersonId;
-        hash = 67 * hash + Objects.hashCode(this.name);
-        hash = 67 * hash + Objects.hashCode(this.description);
-        hash = 67 * hash + (this.villain ? 1 : 0);
-        hash = 67 * hash + Objects.hashCode(this.organizations);
-        hash = 67 * hash + Objects.hashCode(this.powers);
-        hash = 67 * hash + Objects.hashCode(this.sightings);
+        hash = 79 * hash + this.superPersonId;
+        hash = 79 * hash + Objects.hashCode(this.name);
+        hash = 79 * hash + Objects.hashCode(this.description);
+        hash = 79 * hash + (this.villain ? 1 : 0);
+        hash = 79 * hash + Objects.hashCode(this.organizations);
+        hash = 79 * hash + Objects.hashCode(this.powers);
         return hash;
     }
 
@@ -116,11 +106,11 @@ public class SuperPerson {
         if (!Objects.equals(this.powers, other.powers)) {
             return false;
         }
-        if (!Objects.equals(this.sightings, other.sightings)) {
-            return false;
-        }
         return true;
     }
+
+
+
 
 
     

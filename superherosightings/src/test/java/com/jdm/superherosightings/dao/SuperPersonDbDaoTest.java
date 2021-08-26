@@ -97,11 +97,10 @@ public class SuperPersonDbDaoTest {
         
         List<SuperPerson> heroes = superPersonDao.getAllHeroes();
         assertEquals(heroes.size(), 1);
-        assertEquals(heroes.get(0), hero);
+        
         
         List<SuperPerson> villains = superPersonDao.getAllVillains();
         assertEquals(villains.size(), 1);
-        assertEquals(villains.get(0), villain);
         
     }
 

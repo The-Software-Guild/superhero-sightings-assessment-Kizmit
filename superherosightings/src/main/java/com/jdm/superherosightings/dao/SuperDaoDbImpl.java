@@ -1,5 +1,7 @@
 package com.jdm.superherosightings.dao;
 
+import com.jdm.superherosightings.entities.Organization;
+import com.jdm.superherosightings.entities.Power;
 import com.jdm.superherosightings.entities.SuperPerson;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,10 +28,10 @@ public class SuperDaoDbImpl implements SuperPersonDao {
     JdbcTemplate jdbc;
     
     @Override
-    public SuperPerson getSuperById(int heroId) {
+    public SuperPerson getSuperById(int superPersonId) {
         try {
             final String SELECT_SUPER_PERSON_BY_ID = "SELECT * FROM superperson WHERE superPersonId = ?";
-            SuperPerson hero = jdbc.queryForObject(SELECT_SUPER_PERSON_BY_ID, new HeroVillainMapper(), heroId);
+            SuperPerson hero = jdbc.queryForObject(SELECT_SUPER_PERSON_BY_ID, new SuperPersonMapper(), superPersonId);
             return hero;
         } 
         catch(DataAccessException ex) {
@@ -40,39 +42,49 @@ public class SuperDaoDbImpl implements SuperPersonDao {
     @Override
     public List<SuperPerson> getAllHeroes() {
         final String GET_ALL_HEROES = "SELECT * FROM superperson WHERE isVillain = ?";
-        return jdbc.query(GET_ALL_HEROES, new HeroVillainMapper(), false);
+        List<SuperPerson> heroes = jdbc.query(GET_ALL_HEROES, new SuperPersonMapper(), false);
+        heroes.forEach(hero -> {
+            hero = assosciatePowers(hero);
+            hero = assosciateOrganizations(hero);
+        });
+        return heroes;
     }
     
     @Override
     public List<SuperPerson> getAllVillains() {
-        final String GET_ALL_VILLAINS = "SELECT * FROM superperson WHERE isVillain = ?";
-        return jdbc.query(GET_ALL_VILLAINS, new HeroVillainMapper(), true);
+        final String GET_ALL_HEROES = "SELECT * FROM superperson WHERE isVillain = ?";
+        List<SuperPerson> villains = jdbc.query(GET_ALL_HEROES, new SuperPersonMapper(), true);
+        villains.forEach(villain -> {
+            villain = assosciatePowers(villain);
+            villain = assosciateOrganizations(villain);
+        });
+        return villains;
     }
 
     @Override
     @Transactional
-    public SuperPerson addSuper(SuperPerson heroVillain) {
+    public SuperPerson addSuper(SuperPerson superPerson) {
         final String INSERT_SUPER_PERSON = "INSERT INTO superperson(sName, sDescription, isVillain) VALUES(?,?,?)";
-        jdbc.update(INSERT_SUPER_PERSON, heroVillain.getName(), heroVillain.getDescription(), heroVillain.isVillain());
+        jdbc.update(INSERT_SUPER_PERSON, superPerson.getName(), superPerson.getDescription(), superPerson.isVillain());
         int newId = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
-        heroVillain.setSuperPersonId(newId);
-        return heroVillain;    
+        superPerson.setSuperPersonId(newId);
+        return superPerson;    
     }
 
     @Override
     @Transactional
-    public void deleteSuperById(int heroVillainId) {
+    public void deleteSuperById(int superPersonId) {
         final String DELETE_SIGHTING = "DELETE hvs.* FROM sighting hvs WHERE superPersonId = ?";
-        jdbc.update(DELETE_SIGHTING, heroVillainId);
+        jdbc.update(DELETE_SIGHTING, superPersonId);
         
         final String DELETE_ORGSUPERPERSON = "DELETE ohv.* FROM organizationsuperperson ohv WHERE superPersonId = ?";
-        jdbc.update(DELETE_ORGSUPERPERSON, heroVillainId);
+        jdbc.update(DELETE_ORGSUPERPERSON, superPersonId);
         
         final String DELETE_SUPERPERSONPOWER = "DELETE hvp.* FROM superpersonpower hvp WHERE superPersonId = ?";
-        jdbc.update(DELETE_SUPERPERSONPOWER, heroVillainId);
+        jdbc.update(DELETE_SUPERPERSONPOWER, superPersonId);
         
         final String DELETE_SUPERPERSON = "DELETE hv.* FROM superperson hv WHERE superPersonId = ?";
-        jdbc.update(DELETE_SUPERPERSON, heroVillainId);
+        jdbc.update(DELETE_SUPERPERSON, superPersonId);
     }
 
     @Override
@@ -81,7 +93,27 @@ public class SuperDaoDbImpl implements SuperPersonDao {
         jdbc.update(UPDATE_SUPERPERSON, superperson.getName(), superperson.getDescription(), superperson.isVillain(), superperson.getSuperPersonId());    
     }
 
-    private static final class HeroVillainMapper implements RowMapper<SuperPerson> {
+    private SuperPerson assosciatePowers(SuperPerson superPerson) {
+        final String GET_HERO_POWERS = "SELECT * FROM superperson sp "
+                + "JOIN superpersonpower spp ON sp.superPersonId = spp.superPersonId "
+                + "JOIN power p ON spp.powerId = p.powerId "
+                + "WHERE sp.superPersonId = ?";
+        List<Power> powers = jdbc.query(GET_HERO_POWERS, new PowerPersonMapper(), superPerson.getSuperPersonId());
+        superPerson.setPowers(powers);
+        return superPerson;
+    }
+
+    private SuperPerson assosciateOrganizations(SuperPerson superPerson) {
+       final String GET_HERO_ORGANIZATIONS = "SELECT * FROM superperson sp "
+                + "JOIN organizationsuperperson osp ON sp.superPersonId = osp.superPersonId "
+                + "JOIN organization o ON o.organizationId = osp.organizationId "
+                + "WHERE sp.superPersonId = ?";
+        List<Organization> organizations = jdbc.query(GET_HERO_ORGANIZATIONS, new OrganizationPersonMapper(), superPerson.getSuperPersonId());
+        superPerson.setOrganizations(organizations);
+        return superPerson;    
+    }
+
+    private static final class SuperPersonMapper implements RowMapper<SuperPerson> {
 
         @Override
         public SuperPerson mapRow(ResultSet rs, int index) throws SQLException {
@@ -93,5 +125,31 @@ public class SuperDaoDbImpl implements SuperPersonDao {
             return superPerson;
         }
     }
+    
+    private static final class PowerPersonMapper implements RowMapper<Power> {
 
+        @Override
+        public Power mapRow(ResultSet rs, int index) throws SQLException {
+            Power power = new Power();
+            power.setPowerId(rs.getInt("powerId"));
+            power.setName(rs.getString("powerName"));
+            power.setDescription(rs.getString("powerDesc"));
+            return power;
+        }
+    }
+    
+    private static final class OrganizationPersonMapper implements RowMapper<Organization> {
+
+        @Override
+        public Organization mapRow(ResultSet rs, int index) throws SQLException {
+            Organization organization = new Organization();
+            organization.setLocationId(rs.getInt("locationId"));
+            organization.setType(rs.getString("organizationType"));
+            organization.setName(rs.getString("organizationName"));
+            organization.setDescription(rs.getString("organizationDesc"));
+            organization.setPhone(rs.getString("organizationPhone"));
+            return organization;
+        }
+    }
+    
 }

@@ -7,7 +7,9 @@
 package com.jdm.superherosightings.entities;
 
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Objects;
+
 
 
 /**
@@ -22,13 +24,15 @@ public class Sighting {
     private SuperPerson superPerson;
     private Location location;
     private Timestamp sightingTime;
+    private List<Organization> organizations;
+ 
 
-    public int getLocationId() {
-        return locationId;
+    public int getSightingId() {
+        return sightingId;
     }
 
-    public void setLocationId(int locationId) {
-        this.locationId = locationId;
+    public void setSightingId(int sightingId) {
+        this.sightingId = sightingId;
     }
 
     public int getSuperPersonId() {
@@ -39,12 +43,12 @@ public class Sighting {
         this.superPersonId = superPersonId;
     }
 
-    public int getSightingId() {
-        return sightingId;
+    public int getLocationId() {
+        return locationId;
     }
 
-    public void setSightingId(int sightingId) {
-        this.sightingId = sightingId;
+    public void setLocationId(int locationId) {
+        this.locationId = locationId;
     }
 
     public SuperPerson getSuperPerson() {
@@ -71,14 +75,20 @@ public class Sighting {
         this.sightingTime = sightingTime;
     }
 
+    public List<Organization> getOrganizations() {
+        return organizations;
+    }
+
+    public void setOrganizations(List<Organization> organizations) {
+        this.organizations = organizations;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 53 * hash + this.sightingId;
-        hash = 53 * hash + this.superPersonId;
-        hash = 53 * hash + this.locationId;
-        hash = 53 * hash + Objects.hashCode(this.superPerson);
-        hash = 53 * hash + Objects.hashCode(this.location);
+        int hash = 7;
+        hash = 83 * hash + this.sightingId;
+        hash = 83 * hash + this.superPersonId;
+        hash = 83 * hash + this.locationId;
         return hash;
     }
 
@@ -103,14 +113,10 @@ public class Sighting {
         if (this.locationId != other.locationId) {
             return false;
         }
-        if (!Objects.equals(this.superPerson, other.superPerson)) {
-            return false;
-        }
-        if (!Objects.equals(this.location, other.location)) {
-            return false;
-        }
         return true;
     }
+
+ 
 
 
 
