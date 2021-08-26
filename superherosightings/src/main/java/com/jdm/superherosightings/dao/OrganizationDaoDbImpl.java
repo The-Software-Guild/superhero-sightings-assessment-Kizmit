@@ -60,7 +60,7 @@ public class OrganizationDaoDbImpl implements OrganizationDao {
     @Override
     @Transactional
     public void deleteOrganizationById(int organizationId) {
-        final String DELETE_ORGHEROVILLAIN = "DELETE ohv.* FROM organizationherovillain ohv WHERE ohv.organizationId = ?";
+        final String DELETE_ORGHEROVILLAIN = "DELETE ohv.* FROM organizationsuperperson ohv WHERE ohv.organizationId = ?";
         jdbc.update(DELETE_ORGHEROVILLAIN, organizationId);
         
         final String DELETE_ORGANIZATION = "DELETE o.* FROM organization o WHERE organizationId = ?";

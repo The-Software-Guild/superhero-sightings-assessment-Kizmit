@@ -71,7 +71,7 @@ public class LocationDaoDbImpl implements LocationDao {
         final String DELETE_SIGHTING = "DELETE s.* FROM sighting s WHERE locationId = ?";
         jdbc.update(DELETE_SIGHTING, locationId);
         
-        final String DELETE_ORGHEROVILLAIN = "DELETE ohv.* FROM organizationherovillain ohv "
+        final String DELETE_ORGHEROVILLAIN = "DELETE ohv.* FROM organizationsuperperson ohv "
                 + "JOIN organization o ON ohv.organizationId = o.organizationId WHERE o.locationId = ?";
         jdbc.update(DELETE_ORGHEROVILLAIN, locationId);
         

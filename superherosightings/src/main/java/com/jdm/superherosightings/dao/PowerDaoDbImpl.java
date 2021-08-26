@@ -51,18 +51,27 @@ public class PowerDaoDbImpl implements PowerDao {
     @Override
     @Transactional
     public Power addPower(Power power) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        final String INSERT_POWER = "INSERT INTO power(powerName, powerDesc) VALUES (?,?)";
+        jdbc.update(INSERT_POWER, power.getName(), power.getDescription());
+        int newId = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
+        power.setPowerId(newId);
+        return power;
     }
 
     @Override
     @Transactional
     public void deletePowerById(int powerId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        final String DELETE_HEROVILLAINPOWER = "DELETE hvp.* FROM superpersonpower hvp WHERE powerId = ?";
+        jdbc.update(DELETE_HEROVILLAINPOWER, powerId);
+        
+        final String DELETE_POWER = "DELETE p.* FROM power p WHERE powerId = ?";
+        jdbc.update(DELETE_POWER, powerId);
     }
 
     @Override
     public void editPower(Power power) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        final String UPDATE_POWER = "UPDATE power SET powerName = ?, powerDesc = ? WHERE powerId = ?";
+        jdbc.update(UPDATE_POWER, power.getName(), power.getDescription(), power.getPowerId());
     }
     private static final class PowerMapper implements RowMapper<Power> {
 
@@ -75,5 +84,4 @@ public class PowerDaoDbImpl implements PowerDao {
             return power;
         }
     }
-
 }

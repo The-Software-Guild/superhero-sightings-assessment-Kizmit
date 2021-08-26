@@ -45,10 +45,9 @@ public class LocationDaoDbImplTest {
     
     @BeforeEach
     public void setUp() {
-        List<Location> locations = locationDao.getAllLocations();
-        for(Location location : locations) {
+        locationDao.getAllLocations().forEach(location -> {
             locationDao.deleteLocationById(location.getLocationId());
-        }
+        });
         
         location1 = new Location();
         location2 = new Location();

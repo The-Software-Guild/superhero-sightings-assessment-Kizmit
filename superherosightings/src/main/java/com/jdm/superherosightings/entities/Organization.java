@@ -14,7 +14,7 @@ public class Organization {
     private int organizationId, locationId;
 
     private String name, type, description, phone;
-    private List<HeroVillain> members;
+    private List<SuperPerson> members;
 
     public int getOrganizationId() {
         return organizationId;
@@ -64,11 +64,11 @@ public class Organization {
         this.phone = phone;
     }
 
-    public List<HeroVillain> getMembers() {
+    public List<SuperPerson> getMembers() {
         return members;
     }
 
-    public void setMembers(List<HeroVillain> members) {
+    public void setMembers(List<SuperPerson> members) {
         this.members = members;
     }
 

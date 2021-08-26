@@ -16,18 +16,27 @@ import java.util.Objects;
  * @email joedmcadams@gmail.com
  * 
  */
+
 public class Sighting {
-    private int sightingId, heroVillainId;
-    private HeroVillain heroVillain;
+    private int sightingId, superPersonId, locationId;
+    private SuperPerson superPerson;
     private Location location;
     private Timestamp sightingTime;
 
-    public int getHeroVillainId() {
-        return heroVillainId;
+    public int getLocationId() {
+        return locationId;
     }
 
-    public void setHeroVillainId(int heroVillainId) {
-        this.heroVillainId = heroVillainId;
+    public void setLocationId(int locationId) {
+        this.locationId = locationId;
+    }
+
+    public int getSuperPersonId() {
+        return superPersonId;
+    }
+
+    public void setSuperPersonId(int superPersonId) {
+        this.superPersonId = superPersonId;
     }
 
     public int getSightingId() {
@@ -38,12 +47,12 @@ public class Sighting {
         this.sightingId = sightingId;
     }
 
-    public HeroVillain getHeroVillain() {
-        return heroVillain;
+    public SuperPerson getSuperPerson() {
+        return superPerson;
     }
 
-    public void setHeroVillain(HeroVillain heroVillain) {
-        this.heroVillain = heroVillain;
+    public void setSuperPerson(SuperPerson superPerson) {
+        this.superPerson = superPerson;
     }
 
     public Location getLocation() {
@@ -64,12 +73,12 @@ public class Sighting {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 37 * hash + this.sightingId;
-        hash = 37 * hash + this.heroVillainId;
-        hash = 37 * hash + Objects.hashCode(this.heroVillain);
-        hash = 37 * hash + Objects.hashCode(this.location);
-        hash = 37 * hash + Objects.hashCode(this.sightingTime);
+        int hash = 3;
+        hash = 53 * hash + this.sightingId;
+        hash = 53 * hash + this.superPersonId;
+        hash = 53 * hash + this.locationId;
+        hash = 53 * hash + Objects.hashCode(this.superPerson);
+        hash = 53 * hash + Objects.hashCode(this.location);
         return hash;
     }
 
@@ -88,20 +97,21 @@ public class Sighting {
         if (this.sightingId != other.sightingId) {
             return false;
         }
-        if (this.heroVillainId != other.heroVillainId) {
+        if (this.superPersonId != other.superPersonId) {
             return false;
         }
-        if (!Objects.equals(this.heroVillain, other.heroVillain)) {
+        if (this.locationId != other.locationId) {
+            return false;
+        }
+        if (!Objects.equals(this.superPerson, other.superPerson)) {
             return false;
         }
         if (!Objects.equals(this.location, other.location)) {
             return false;
         }
-        if (!Objects.equals(this.sightingTime, other.sightingTime)) {
-            return false;
-        }
         return true;
     }
+
 
 
     

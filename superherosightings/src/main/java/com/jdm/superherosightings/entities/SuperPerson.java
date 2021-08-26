@@ -9,20 +9,20 @@ import java.util.Objects;
  * @email joedmcadams@gmail.com
  * 
  */
-public class HeroVillain {
-    private int heroVillainId;
+public class SuperPerson {
+    private int superPersonId;
     private String name, description;
     private boolean villain;
     private List<Organization> organizations;
     private List<Power> powers;
     private List<Sighting> sightings;
 
-    public int getHeroVillainId() {
-        return heroVillainId;
+    public int getSuperPersonId() {
+        return superPersonId;
     }
 
-    public void setHeroVillainId(int heroVillainId) {
-        this.heroVillainId = heroVillainId;
+    public void setSuperPersonId(int superPersonId) {
+        this.superPersonId = superPersonId;
     }
 
     public String getName() {
@@ -76,7 +76,7 @@ public class HeroVillain {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 67 * hash + this.heroVillainId;
+        hash = 67 * hash + this.superPersonId;
         hash = 67 * hash + Objects.hashCode(this.name);
         hash = 67 * hash + Objects.hashCode(this.description);
         hash = 67 * hash + (this.villain ? 1 : 0);
@@ -97,8 +97,8 @@ public class HeroVillain {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final HeroVillain other = (HeroVillain) obj;
-        if (this.heroVillainId != other.heroVillainId) {
+        final SuperPerson other = (SuperPerson) obj;
+        if (this.superPersonId != other.superPersonId) {
             return false;
         }
         if (this.villain != other.villain) {

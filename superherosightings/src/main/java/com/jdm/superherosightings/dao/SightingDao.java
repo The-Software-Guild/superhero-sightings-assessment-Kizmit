@@ -5,7 +5,9 @@
  */
 package com.jdm.superherosightings.dao;
 
+
 import com.jdm.superherosightings.entities.Sighting;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -19,4 +21,5 @@ public interface SightingDao {
     Sighting addSighting(Sighting heroSighting);
     void deleteSightingById(int heroSightingId); //boolean for verification?
     void editSighting(Sighting heroSighting);
+    public List<Sighting> getAllSightingsAtLocationDate(int locationId, LocalDate date);
 }
