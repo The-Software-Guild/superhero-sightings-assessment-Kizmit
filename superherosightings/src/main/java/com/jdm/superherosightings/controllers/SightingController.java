@@ -8,7 +8,6 @@ package com.jdm.superherosightings.controllers;
 
 import com.jdm.superherosightings.dao.SightingDao;
 import com.jdm.superherosightings.entities.Location;
-import com.jdm.superherosightings.entities.Organization;
 import com.jdm.superherosightings.entities.Power;
 import com.jdm.superherosightings.entities.Sighting;
 import com.jdm.superherosightings.entities.SuperPerson;
@@ -77,22 +76,13 @@ public class SightingController {
         return "powers";
     }
     
-    @GetMapping("organizations")
-    public String displayOrganizations(Model model){
-        List<Organization> organizations = service.getOrganizations();
-        model.addAttribute("organizations", organizations);
-        return "organizations";
-    }
-    
+
     @GetMapping("locations")
     public String displayLocations(Model model){
         List<Location> locations = service.getLocations();
         model.addAttribute("locations", locations);
         return "locations";
     }
-    
-
-
     
     @GetMapping("deleteSighting")
     public String deleteSighting(HttpServletRequest request) {
@@ -138,7 +128,6 @@ public class SightingController {
         if(violations.isEmpty()){
             service.updateSighting(sighting);
         }
-        
         return "redirect:/sightings";
     }
 
