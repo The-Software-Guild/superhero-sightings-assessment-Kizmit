@@ -8,6 +8,7 @@ package com.jdm.superherosightings.dao;
 
 import com.jdm.superherosightings.entities.Location;
 import com.jdm.superherosightings.entities.Sighting;
+import com.jdm.superherosightings.entities.SuperPerson;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -26,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @email joedmcadams@gmail.com
  * 
  */
+
 @Repository
 public class SightingDaoDbImpl implements SightingDao {
     
@@ -37,6 +39,8 @@ public class SightingDaoDbImpl implements SightingDao {
         try {
             final String SELECT_SIGHTING_BY_ID = "SELECT * FROM sighting WHERE sightingId = ?";
             Sighting sighting = jdbc.queryForObject(SELECT_SIGHTING_BY_ID, new SightingMapper(), sightingId);
+            sighting = assosciateSuperPerson(sighting);
+            sighting = assosciateLocation(sighting);
             return sighting;
         } 
         catch(DataAccessException ex) {
@@ -47,13 +51,22 @@ public class SightingDaoDbImpl implements SightingDao {
     @Override
     public List<Sighting> getAllHeroSightings() {
         final String GET_ALL_SIGHTINGS = "SELECT * FROM sighting s JOIN superperson sp ON s.superPersonId = sp.superPersonId WHERE sp.isVillain = ?";
-        return jdbc.query(GET_ALL_SIGHTINGS, new SightingMapper(), false);
+        List<Sighting> sightings = jdbc.query(GET_ALL_SIGHTINGS, new SightingMapper(), false);
+        sightings.forEach(sighting -> {
+            sighting = assosciateSuperPerson(sighting);
+            sighting = assosciateLocation(sighting);
+        });
+        return sightings;
     }
 
     @Override
     public List<Sighting> getAllVillainSightings() {  
         final String GET_ALL_SIGHTINGS = "SELECT * FROM sighting s JOIN superperson sp ON s.superPersonId = sp.superPersonId WHERE sp.isVillain = ?";
         List<Sighting> sightings = jdbc.query(GET_ALL_SIGHTINGS, new SightingMapper(), true); 
+        sightings.forEach(sighting -> {
+            sighting = assosciateSuperPerson(sighting);
+            sighting = assosciateLocation(sighting);
+        });
         return sightings;  
     }
     
@@ -63,14 +76,19 @@ public class SightingDaoDbImpl implements SightingDao {
                 + "JOIN superperson sp ON s.superPersonId = sp.superPersonId "
                 + "JOIN location l ON l.locationId = s.locationId "
                 + "WHERE l.locationId = ? AND CAST(s.sightingTime AS DATE) = ?";
-        return jdbc.query(GET_SIGHTINGS_LOCATIONDATE, new SightingMapper(), locationId, date);
+        List<Sighting> sightings = jdbc.query(GET_SIGHTINGS_LOCATIONDATE, new SightingMapper(), locationId, date);
+        sightings.forEach(sighting -> {
+            sighting = assosciateSuperPerson(sighting);
+            sighting = assosciateLocation(sighting);
+        });
+        return sightings;
     }
 
     @Override
     @Transactional
     public Sighting addSighting(Sighting sighting) {
         final String INSERT_SIGHTING = "INSERT INTO sighting(superPersonId, locationId, sightingTime) VALUES (?,?,?)";
-        jdbc.update(INSERT_SIGHTING, sighting.getSuperPersonId(), sighting.getLocationId(), sighting.getSightingTime());
+        jdbc.update(INSERT_SIGHTING, sighting.getSuperPersonId(), sighting.getLocationId(), sighting.getSightingDate());
         int newId = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
         sighting.setSightingId(newId);
         return sighting;
@@ -86,7 +104,21 @@ public class SightingDaoDbImpl implements SightingDao {
     @Override
     public void editSighting(Sighting sighting) {
         final String UPDATE_SIGHTING = "UPDATE sighting SET superPersonId = ?, locationId = ?, sightingTime = ? WHERE sightingId = ?";
-        jdbc.update(UPDATE_SIGHTING, sighting.getSuperPersonId(), sighting.getLocationId(), sighting.getSightingTime(), sighting.getSightingId());
+        jdbc.update(UPDATE_SIGHTING, sighting.getSuperPersonId(), sighting.getLocationId(), sighting.getSightingDate(), sighting.getSightingId());
+    }
+
+    private Sighting assosciateSuperPerson(Sighting sighting) {
+        final String GET_SIGHTING_SUPERPERSON = "SELECT * FROM superperson sp WHERE sp.superPersonId = ?";
+        SuperPerson superPerson = jdbc.queryForObject(GET_SIGHTING_SUPERPERSON, new SuperPersonDaoDbImpl.SuperPersonMapper(), sighting.getSuperPersonId());
+        sighting.setSuperPerson(superPerson);
+        return sighting;
+    }
+
+    private Sighting assosciateLocation(Sighting sighting) {
+        final String GET_SIGHTING_LOCATION = "SELECT * FROM location l WHERE l.locationId = ?";
+        Location location = jdbc.queryForObject(GET_SIGHTING_LOCATION, new LocationDaoDbImpl.LocationMapper(), sighting.getLocationId());
+        sighting.setLocation(location);
+        return sighting;
     }
     
     public static final class SightingMapper implements RowMapper<Sighting> {
@@ -97,7 +129,7 @@ public class SightingDaoDbImpl implements SightingDao {
             sighting.setSightingId(rs.getInt("sightingId"));
             sighting.setSuperPersonId(rs.getInt("superPersonId"));
             sighting.setLocationId(rs.getInt("locationId"));
-            sighting.setSightingTime(rs.getTimestamp("sightingTime"));
+            sighting.setSightingDate(rs.getDate("sightingTime"));
             
             return sighting;
         }

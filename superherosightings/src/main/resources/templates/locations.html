@@ -20,7 +20,7 @@
         </div>
         <div class="row m-4">
             <div class="col text-left">
-                <h1>Heroes</h1>
+                <h1>Locations</h1>
             </div>
         </div>
         <div class="row m-4 border border-dark">
@@ -29,20 +29,23 @@
                         <thead>
                             <tr>
                                 <th>Name</th>
+                                <th>City</th>
+                                <th>State</th>
+                                <th>Address</th>
+                                <th>Coordinates</th>
                                 <th>Description</th>
-                                <th>Power(s)</th>
-                                <th>Organization(s)</th>
-                                <th></th>
-                                <th></th>
                                 <!--Last sighting? stretch-->
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="hero : ${heroes}">
-                                <td th:text="${hero.name}">Name</td>
-                                <td th:text="${hero.Description}">Description</td>
-                                <td th:utext="${hero.powerNames}">Description</td>
-                                <td th:utext="${hero.organizationNames}">Description</td>
+                            <tr th:each="location : ${locations}">
+                                <td th:text="${location.name}">Name</td>
+                                <td th:text="${location.city}">City</td>
+                                <td th:text="${location.state}">State</td>
+                                <td th:text="${location.address}">Address</td>
+                                <td th:text="${location.coordinates}">Coordinates</td>
+                                <td th:text="${location.description}">Description</td>
+                                <!--Sightings at location? organizations at location?-->
                                 <td><!--<a href="#" th:href="@{/editTeacher(id=${teacher.id})}">-->Edit</a></td>
                                 <td><!--<a href="#" th:href="@{/deleteTeacher(id=${teacher.id})}">-->Delete</a></td>
                             </tr>

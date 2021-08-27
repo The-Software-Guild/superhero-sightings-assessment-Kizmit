@@ -8,6 +8,7 @@ package com.jdm.superherosightings.dao;
 import com.jdm.superherosightings.entities.Location;
 import com.jdm.superherosightings.entities.Sighting;
 import com.jdm.superherosightings.entities.SuperPerson;
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -109,12 +110,12 @@ public class SightingDaoDbImplTest {
         sighting1 = new Sighting();
         sighting1.setSuperPersonId(hero.getSuperPersonId());
         sighting1.setLocationId(location1.getLocationId());
-        sighting1.setSightingTime(Timestamp.valueOf(LocalDateTime.now()));
+        sighting1.setSightingDate(Date.valueOf(LocalDate.now()));
         
         sighting2 = new Sighting();
         sighting2.setSuperPersonId(villain.getSuperPersonId());
         sighting2.setLocationId(location2.getLocationId());
-        sighting2.setSightingTime(Timestamp.valueOf(LocalDateTime.now()));
+        sighting2.setSightingDate(Date.valueOf(LocalDate.now()));
         
     }
     
@@ -192,7 +193,7 @@ public class SightingDaoDbImplTest {
         sighting1 = sightingDao.addSighting(sighting1);
         sighting2 = sightingDao.addSighting(sighting2);
         
-        List<Sighting> sightingGet = sightingDao.getAllSightingsAtLocationDate(sighting1.getLocationId(), sighting1.getSightingTime().toLocalDateTime().toLocalDate());
+        List<Sighting> sightingGet = sightingDao.getAllSightingsAtLocationDate(sighting1.getLocationId(), sighting1.getSightingDate().toLocalDate());
         assertEquals(1,sightingGet.size());
     }
 }

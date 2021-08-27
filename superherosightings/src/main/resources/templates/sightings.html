@@ -41,18 +41,46 @@
                         <tr th:each="sighting : ${sightings}">
                             <td th:text="${sighting.superPerson.name}">Name</td>
                             <td th:text="${sighting.location.name}">Location</td>
-                            <td th:text="${sighting.sightingTime}">Date</td>
+                            <td th:text="${sighting.sightingDate}">Date</td>
                             <td th:utext="${sighting.organizationNames}">Organization(s)</td>
                             <td th:utext="${sighting.powerNames}">Power(s)</td>
-
-                            <td><!--<a href="#" th:href="@{/editTeacher(id=${teacher.id})}">-->Edit</a></td>
-                            <td><!--<a href="#" th:href="@{/deleteTeacher(id=${teacher.id})}">-->Delete</a></td>
+                            <td><a href="#" th:href="@{/editSighting(id=${sighting.sightingId})}">Edit</a></td>
+                            <td><a href="#" th:href="@{/deleteSighting(id=${sighting.sightingId})}" onclick="return confirm('Are you sure?')">Delete</a></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
-        <div class="row">
+            <div class="row m-4 border border-dark">
+                <div class="col-12 m-1 text-center" th:if="${!errors.isEmpty()}">
+                    <p class="alert alert-danger" th:each="error : ${errors}" th:text="${error.message}">Error message</p>
+                </div>
+                <div class="col-3 text-center m-3">
+                    <span class="h3">Add Sighting</span>
+                </div>
+                <div class="col-7 text-center m-3">
+                    <form action="addSighting" method="POST">                
+                        <div class="form-group row">
+                            <label for="superPersonName" class="col-3 col-form-label">
+                                Super Person:</label>
+                            <div class="col-9">
+                                <input type="text" name="superPersonName" 
+                                       id="superPersonName" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="locationName" class="col-3 col-form-label">
+                                Location:</label>
+                            <div class="col-9">
+                                <input type="text" name="locationName" 
+                                       id="locationName" class="form-control"/>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add Sighting</button>
+                    </form>
+                </div>
+            </div>
+        <div class="row mt-3">
             <div class="col">
                 <a href="heroes" class="btn btn-outline-primary btn-lg">Heroes</a>
             </div>

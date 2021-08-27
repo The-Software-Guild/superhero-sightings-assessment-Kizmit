@@ -6,8 +6,9 @@
 
 package com.jdm.superherosightings.entities;
 
-import java.sql.Timestamp;
+import java.sql.Date;
 import java.util.List;
+import javax.validation.constraints.NotNull;
 
 
 
@@ -21,9 +22,16 @@ import java.util.List;
 
 public class Sighting {
     private int sightingId, superPersonId, locationId;
+   
+    @NotNull(message = "Super person must exist in records")
     private SuperPerson superPerson;
+   
+    @NotNull(message = "Location must exist in records")
     private Location location;
-    private Timestamp sightingTime;
+    
+    @NotNull(message = "Must enter a value for date")
+    private Date sightingDate;
+    
     private List<Organization> organizations;
     private List<Power> powers;
     private String organizationNames, powerNames;
@@ -81,12 +89,12 @@ public class Sighting {
         this.location = location;
     }
 
-    public Timestamp getSightingTime() {
-        return sightingTime;
+    public Date getSightingDate() {
+        return sightingDate;
     }
 
-    public void setSightingTime(Timestamp sightingTime) {
-        this.sightingTime = sightingTime;
+    public void setSightingDate(Date sightingDate) {
+        this.sightingDate = sightingDate;
     }
 
     public List<Organization> getOrganizations() {

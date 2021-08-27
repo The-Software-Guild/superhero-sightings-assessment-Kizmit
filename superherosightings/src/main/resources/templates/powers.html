@@ -20,7 +20,7 @@
         </div>
         <div class="row m-4">
             <div class="col text-left">
-                <h1>Heroes</h1>
+                <h1>Powers</h1>
             </div>
         </div>
         <div class="row m-4 border border-dark">
@@ -30,19 +30,15 @@
                             <tr>
                                 <th>Name</th>
                                 <th>Description</th>
-                                <th>Power(s)</th>
-                                <th>Organization(s)</th>
                                 <th></th>
                                 <th></th>
                                 <!--Last sighting? stretch-->
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="hero : ${heroes}">
-                                <td th:text="${hero.name}">Name</td>
-                                <td th:text="${hero.Description}">Description</td>
-                                <td th:utext="${hero.powerNames}">Description</td>
-                                <td th:utext="${hero.organizationNames}">Description</td>
+                            <tr th:each="power : ${powers}">
+                                <td th:text="${power.name}">Name</td>
+                                <td th:text="${power.description}">Description</td>
                                 <td><!--<a href="#" th:href="@{/editTeacher(id=${teacher.id})}">-->Edit</a></td>
                                 <td><!--<a href="#" th:href="@{/deleteTeacher(id=${teacher.id})}">-->Delete</a></td>
                             </tr>

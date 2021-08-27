@@ -7,18 +7,27 @@
 package com.jdm.superherosightings.controllers;
 
 import com.jdm.superherosightings.dao.SightingDao;
+import com.jdm.superherosightings.entities.Location;
+import com.jdm.superherosightings.entities.Organization;
+import com.jdm.superherosightings.entities.Power;
 import com.jdm.superherosightings.entities.Sighting;
 import com.jdm.superherosightings.entities.SuperPerson;
 import com.jdm.superherosightings.service.ServiceLayer;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import javax.servlet.http.HttpServletRequest;
 
 import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 
 /**
@@ -59,6 +68,78 @@ public class SightingController {
         List<SuperPerson> heroes = service.getHeroes();
         model.addAttribute("heroes", heroes);
         return "heroes";
+    }
+    
+    @GetMapping("powers")
+    public String displayPowers(Model model){
+        List<Power> powers = service.getPowers();
+        model.addAttribute("powers", powers);
+        return "powers";
+    }
+    
+    @GetMapping("organizations")
+    public String displayOrganizations(Model model){
+        List<Organization> organizations = service.getOrganizations();
+        model.addAttribute("organizations", organizations);
+        return "organizations";
+    }
+    
+    @GetMapping("locations")
+    public String displayLocations(Model model){
+        List<Location> locations = service.getLocations();
+        model.addAttribute("locations", locations);
+        return "locations";
+    }
+    
+
+
+    
+    @GetMapping("deleteSighting")
+    public String deleteSighting(HttpServletRequest request) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        service.deleteSightingById(id);
+        return "redirect:/sightings";
+    }
+    
+    @PostMapping("addSighting")
+    public String addSighting(HttpServletRequest request) {
+        String superPersonName = request.getParameter("superPersonName");
+        String locationName = request.getParameter("locationName");
+        
+        Sighting sighting = service.createSighting(superPersonName, locationName);
+        
+        Validator validate = Validation.buildDefaultValidatorFactory().getValidator();
+        violations = validate.validate(sighting);
+
+        if(violations.isEmpty()) {
+            sightingDao.addSighting(sighting);
+        }
+        return "redirect:/sightings";
+    }
+    
+    @GetMapping("editSighting")
+    public String editSighting(HttpServletRequest request, Model model) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        Sighting sighting = service.getSightingById(id);
+
+        model.addAttribute("sighting", sighting);
+        return "editSighting";
+    }
+
+    @PostMapping("editSighting")
+    public String performEditSighting(HttpServletRequest request) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        Sighting sighting = service.getSightingById(id);
+        sighting = service.editSighting(sighting, request);
+        
+        Validator validate = Validation.buildDefaultValidatorFactory().getValidator();
+        violations = validate.validate(sighting);
+        
+        if(violations.isEmpty()){
+            service.updateSighting(sighting);
+        }
+        
+        return "redirect:/sightings";
     }
 
 }

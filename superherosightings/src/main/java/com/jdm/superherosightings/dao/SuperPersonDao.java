@@ -19,4 +19,6 @@ public interface SuperPersonDao {
     SuperPerson addSuper(SuperPerson hero);
     void deleteSuperById(int heroId); //boolean for verification?
     void editSuper(SuperPerson hero);
+
+    public SuperPerson getSuperPersonByName(String superPersonName);
 }

@@ -7,6 +7,7 @@
 package com.jdm.superherosightings.dao;
 
 import com.jdm.superherosightings.entities.Location;
+import com.jdm.superherosightings.entities.SuperPerson;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -89,6 +90,18 @@ public class LocationDaoDbImpl implements LocationDao {
         jdbc.update(UPDATE_LOCATION, location.getName(), location.getCity(), 
                 location.getState(), location.getAddress(), location.getCoordinates(), 
                 location.getDescription(), location.getLocationId());    
+    }
+
+    @Override
+    public Location getLocationByName(String locationName) {
+        try {
+            final String GET_LOCATION_BY_NAME = "SELECT  * FROM location WHERE locationName = ?";
+            return jdbc.queryForObject(GET_LOCATION_BY_NAME, new LocationMapper(), locationName);
+        } 
+        catch(DataAccessException ex) {
+            return null;
+        }   
+
     }
     
     public static final class LocationMapper implements RowMapper<Location> {

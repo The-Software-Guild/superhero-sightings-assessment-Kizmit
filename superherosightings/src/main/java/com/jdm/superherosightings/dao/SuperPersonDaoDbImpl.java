@@ -115,7 +115,23 @@ public class SuperPersonDaoDbImpl implements SuperPersonDao {
         return superPerson;    
     }
 
-    private static final class SuperPersonMapper implements RowMapper<SuperPerson> {
+    @Override
+    public SuperPerson getSuperPersonByName(String superPersonName) {
+        try {
+            final String GET_SUPER_BY_NAME = "SELECT * FROM superPerson WHERE sName = ?";
+            SuperPerson superPerson = jdbc.queryForObject(GET_SUPER_BY_NAME, new SuperPersonMapper(), superPersonName);   
+            superPerson = assosciatePowers(superPerson);
+            superPerson = assosciateOrganizations(superPerson);
+            return superPerson;
+        } 
+        catch(DataAccessException ex) {
+            return null;
+        }    
+
+       
+    }
+
+    public static final class SuperPersonMapper implements RowMapper<SuperPerson> {
 
         @Override
         public SuperPerson mapRow(ResultSet rs, int index) throws SQLException {

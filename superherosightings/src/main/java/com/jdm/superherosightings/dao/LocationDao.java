@@ -18,4 +18,6 @@ public interface LocationDao {
     Location addLocation(Location location);
     void deleteLocationById(int locationId); //boolean for verification?
     void editLocation(Location location);
+
+    public Location getLocationByName(String locationName);
 }
