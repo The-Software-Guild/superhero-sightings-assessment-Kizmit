@@ -53,5 +53,12 @@ public class SightingController {
         model.addAttribute("villains", villains);
         return "villains";
     }
+    
+    @GetMapping("heroes")
+    public String displayHeroes(Model model){
+        List<SuperPerson> heroes = service.getHeroes();
+        model.addAttribute("heroes", heroes);
+        return "heroes";
+    }
 
 }

@@ -29,17 +29,22 @@
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Location Name</th>
+                            <th>Location</th>
                             <th>Date</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
+                            <th>Organization(s)</th>
+                            <th>Power(s)</th>
+                            <th></th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr th:each="sighting : ${sightings}">
                             <td th:text="${sighting.superPerson.name}">Name</td>
-                            <td th:text="${sighting.location.name}">Location Name</td>
+                            <td th:text="${sighting.location.name}">Location</td>
                             <td th:text="${sighting.sightingTime}">Date</td>
+                            <td th:utext="${sighting.organizationNames}">Organization(s)</td>
+                            <td th:utext="${sighting.powerNames}">Power(s)</td>
+
                             <td><!--<a href="#" th:href="@{/editTeacher(id=${teacher.id})}">-->Edit</a></td>
                             <td><!--<a href="#" th:href="@{/deleteTeacher(id=${teacher.id})}">-->Delete</a></td>
                         </tr>

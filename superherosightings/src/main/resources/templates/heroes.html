@@ -33,16 +33,16 @@
                                 <th>Power(s)</th>
                                 <th>Organization(s)</th>
                                 <th></th>
-                                <th></th> 
+                                <th></th>
                                 <!--Last sighting? stretch-->
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="villain : ${villains}">
-                                <td th:text="${villain.name}">Name</td>
-                                <td th:text="${villain.Description}">Description</td>
-                                <td th:utext="${villain.powerNames}">Description</td>
-                                <td th:utext="${villain.organizationNames}">Description</td>
+                            <tr th:each="hero : ${heroes}">
+                                <td th:text="${hero.name}">Name</td>
+                                <td th:text="${hero.Description}">Description</td>
+                                <td th:utext="${hero.powerNames}">Description</td>
+                                <td th:utext="${hero.organizationNames}">Description</td>
                                 <td><!--<a href="#" th:href="@{/editTeacher(id=${teacher.id})}">-->Edit</a></td>
                                 <td><!--<a href="#" th:href="@{/deleteTeacher(id=${teacher.id})}">-->Delete</a></td>
                             </tr>

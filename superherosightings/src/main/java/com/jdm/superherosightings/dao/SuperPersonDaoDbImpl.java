@@ -22,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 
 @Repository
-public class SuperDaoDbImpl implements SuperPersonDao {
+public class SuperPersonDaoDbImpl implements SuperPersonDao {
 
     @Autowired
     JdbcTemplate jdbc;
@@ -31,8 +31,10 @@ public class SuperDaoDbImpl implements SuperPersonDao {
     public SuperPerson getSuperById(int superPersonId) {
         try {
             final String SELECT_SUPER_PERSON_BY_ID = "SELECT * FROM superperson WHERE superPersonId = ?";
-            SuperPerson hero = jdbc.queryForObject(SELECT_SUPER_PERSON_BY_ID, new SuperPersonMapper(), superPersonId);
-            return hero;
+            SuperPerson superPerson = jdbc.queryForObject(SELECT_SUPER_PERSON_BY_ID, new SuperPersonMapper(), superPersonId);
+            superPerson = assosciatePowers(superPerson);
+            superPerson = assosciateOrganizations(superPerson);
+            return superPerson;
         } 
         catch(DataAccessException ex) {
             return null;
@@ -143,6 +145,7 @@ public class SuperDaoDbImpl implements SuperPersonDao {
         @Override
         public Organization mapRow(ResultSet rs, int index) throws SQLException {
             Organization organization = new Organization();
+            organization.setOrganizationId(rs.getInt("organizationId"));
             organization.setLocationId(rs.getInt("locationId"));
             organization.setType(rs.getString("organizationType"));
             organization.setName(rs.getString("organizationName"));

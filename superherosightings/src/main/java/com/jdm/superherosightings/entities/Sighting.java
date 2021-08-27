@@ -8,7 +8,7 @@ package com.jdm.superherosightings.entities;
 
 import java.sql.Timestamp;
 import java.util.List;
-import java.util.Objects;
+
 
 
 
@@ -25,8 +25,22 @@ public class Sighting {
     private Location location;
     private Timestamp sightingTime;
     private List<Organization> organizations;
- 
+    private List<Power> powers;
+    private String organizationNames, powerNames;
 
+    public List<Power> getPowers() {
+        return powers;
+    }
+
+    public void setPowers(List<Power> powers) {
+        this.powers = powers;
+    }
+    
+    public Sighting(){
+        organizationNames = "";
+        powerNames = "";
+    }
+    
     public int getSightingId() {
         return sightingId;
     }
@@ -114,6 +128,22 @@ public class Sighting {
             return false;
         }
         return true;
+    }
+
+    public void appendOrgNames(String name) {
+        this.organizationNames += name + "<br>";
+    }
+    
+    public void appendPowerNames(String name) {
+        this.powerNames += name + "<br>";
+    }
+    
+    public String getOrganizationNames(){
+        return organizationNames;
+    }
+    
+    public String getPowerNames(){
+        return powerNames;
     }
 
  

@@ -49,13 +49,49 @@ public class ServiceLayer {
             sighting.setSuperPerson(superPersonDao.getSuperById(sighting.getSuperPersonId()));
             sighting.setLocation(locDao.getLocationById(sighting.getLocationId()));
             sighting.setOrganizations(sighting.getSuperPerson().getOrganizations());
+            sighting.setPowers(sighting.getSuperPerson().getPowers());
+            sighting.getOrganizations().forEach(org -> {
+                    sighting.appendOrgNames(org.getName());
+            });
+            sighting.getPowers().forEach(power -> {
+                    sighting.appendPowerNames(power.getName());
+            });
         });
+        
+
+        
         
         return sightings;
     }
 
     public List<SuperPerson> getVillains() {
-        return superPersonDao.getAllVillains();
+        List<SuperPerson> villains = superPersonDao.getAllVillains();
+        villains.forEach(villain -> {
+            villain.getOrganizations().forEach(org -> {
+                villain.appendOrgNames(org.getName());
+            });
+            villain.getPowers().forEach(power -> {
+                villain.appendPowerNames(power.getName());
+            });
+        });
+        
+        
+        return villains;
+    }
+    
+    public List<SuperPerson> getHeroes() {
+        List<SuperPerson> heroes = superPersonDao.getAllHeroes();
+        heroes.forEach(hero -> {
+            hero.getOrganizations().forEach(org -> {
+                hero.appendOrgNames(org.getName());
+            });
+            hero.getPowers().forEach(power -> {
+                hero.appendPowerNames(power.getName());
+            });
+        });
+        
+        
+        return heroes;
     }
     
 

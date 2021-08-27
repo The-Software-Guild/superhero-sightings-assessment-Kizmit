@@ -15,7 +15,12 @@ public class SuperPerson {
     private boolean villain;
     private List<Organization> organizations;
     private List<Power> powers;
-
+    String organizationNames, powerNames;
+    
+    public SuperPerson(){
+        organizationNames = "";
+        powerNames = "";
+    }
     public int getSuperPersonId() {
         return superPersonId;
     }
@@ -63,16 +68,15 @@ public class SuperPerson {
     public void setPowers(List<Power> powers) {
         this.powers = powers;
     }
+    
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 79 * hash + this.superPersonId;
-        hash = 79 * hash + Objects.hashCode(this.name);
-        hash = 79 * hash + Objects.hashCode(this.description);
-        hash = 79 * hash + (this.villain ? 1 : 0);
-        hash = 79 * hash + Objects.hashCode(this.organizations);
-        hash = 79 * hash + Objects.hashCode(this.powers);
+        hash = 71 * hash + this.superPersonId;
+        hash = 71 * hash + Objects.hashCode(this.name);
+        hash = 71 * hash + Objects.hashCode(this.description);
+        hash = 71 * hash + (this.villain ? 1 : 0);
         return hash;
     }
 
@@ -100,18 +104,24 @@ public class SuperPerson {
         if (!Objects.equals(this.description, other.description)) {
             return false;
         }
-        if (!Objects.equals(this.organizations, other.organizations)) {
-            return false;
-        }
-        if (!Objects.equals(this.powers, other.powers)) {
-            return false;
-        }
         return true;
     }
 
-
-
-
+    public void appendOrgNames(String name) {
+        this.organizationNames += name + "<br>";
+    }
+    
+    public void appendPowerNames(String name) {
+        this.powerNames += name + "<br>";
+    }
+    
+    public String getOrganizationNames(){
+        return organizationNames;
+    }
+    
+    public String getPowerNames(){
+        return powerNames;
+    }
 
     
 }
