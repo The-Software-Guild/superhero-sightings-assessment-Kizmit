@@ -55,34 +55,9 @@ public class SightingController {
         return "sightings";
     }
     
-    @GetMapping("villains")
-    public String displayVillains(Model model){
-        List<SuperPerson> villains = service.getVillains();
-        model.addAttribute("villains", villains);
-        return "villains";
-    }
-    
-    @GetMapping("heroes")
-    public String displayHeroes(Model model){
-        List<SuperPerson> heroes = service.getHeroes();
-        model.addAttribute("heroes", heroes);
-        return "heroes";
-    }
-    
-    @GetMapping("powers")
-    public String displayPowers(Model model){
-        List<Power> powers = service.getPowers();
-        model.addAttribute("powers", powers);
-        return "powers";
-    }
+
     
 
-    @GetMapping("locations")
-    public String displayLocations(Model model){
-        List<Location> locations = service.getLocations();
-        model.addAttribute("locations", locations);
-        return "locations";
-    }
     
     @GetMapping("deleteSighting")
     public String deleteSighting(HttpServletRequest request) {
