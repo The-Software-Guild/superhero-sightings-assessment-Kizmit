@@ -86,6 +86,14 @@ public class OrganizationDaoDbImpl implements OrganizationDao {
         organization.setLocation(jdbc.queryForObject(GET_LOCATION_ORGANIZATION, new LocationDaoDbImpl.LocationMapper(), organization.getLocationId()));
         return organization;
     }
+
+    @Override
+    public Organization getOrganizationByName(String orgName) {
+        final String GET_ORG_BY_NAME = "SELECT * FROM organization WHERE organizationName = ?";
+        Organization organization = jdbc.queryForObject(GET_ORG_BY_NAME, new OrganizationMapper(), orgName);
+        organization = assosciateLocation(organization);
+        return organization;
+    }
     
     
     public static final class OrganizationMapper implements RowMapper<Organization> {

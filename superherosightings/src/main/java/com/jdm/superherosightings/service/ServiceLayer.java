@@ -20,6 +20,8 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -230,26 +232,73 @@ public class ServiceLayer {
     }
 
     public SuperPerson createSuperPerson(HttpServletRequest request) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        SuperPerson superPerson = new SuperPerson();
+        String name = request.getParameter("superPersonName");
+        String description = request.getParameter("superPersonDescription");
+        boolean isVillain = Boolean.parseBoolean(request.getParameter("isVillain"));
+        String organizationNames[] = request.getParameterValues("organizationNames");
+        String powerNames[] = request.getParameterValues("powerNames");
+        
+        List<Organization> organizations = new ArrayList<>();
+        List<Power> powers = new ArrayList<>();
+        
+        for(String orgName : organizationNames){
+            organizations.add(orgDao.getOrganizationByName(orgName));
+        }
+        
+        for(String powerName : powerNames){
+            powers.add(powerDao.getPowerByName(powerName));
+        }
+          
+        superPerson.setName(name);
+        superPerson.setDescription(description);
+        superPerson.setVillain(isVillain);
+        superPerson.setOrganizations(organizations);
+        superPerson.setPowers(powers);
+        return superPerson;
     }
 
-    public void addSuperPerson(SuperPerson hero) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void addSuperPerson(SuperPerson superPerson) {
+        superPersonDao.addSuper(superPerson);
     }
 
     public void deleteSuperPersonById(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        superPersonDao.deleteSuperById(id);
     }
 
     public SuperPerson getSuperPersonById(int id) {
+        return superPersonDao.getSuperById(id);
+    }
+
+    public SuperPerson editSuperPerson(SuperPerson superPerson, HttpServletRequest request) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public SuperPerson editSuperPerson(SuperPerson hero, HttpServletRequest request) {
+    public void updateSuperPerson(SuperPerson superPerson) {
+        superPersonDao.editSuper(superPerson);
+    }
+
+    public Power createPower(HttpServletRequest request) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public void updateSuperPerson(SuperPerson hero) {
+    public void addPower(Power power) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void deletePowerById(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public Power getPowerById(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public Power editPower(Power power, HttpServletRequest request) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void updatePower(Power power) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

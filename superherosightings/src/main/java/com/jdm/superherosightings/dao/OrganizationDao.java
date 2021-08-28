@@ -18,4 +18,6 @@ public interface OrganizationDao {
     Organization addOrganization(Organization organization);
     void deleteOrganizationById(int organizationId); //boolean for verification?
     void editOrganization(Organization organization);
+
+    public Organization getOrganizationByName(String orgName);
 }

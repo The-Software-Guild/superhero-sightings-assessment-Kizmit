@@ -17,4 +17,6 @@ public interface PowerDao {
     Power addPower(Power power);
     void deletePowerById(int powerId); //boolean for verification?
     void editPower(Power power);
+
+    public Power getPowerByName(String powerName);
 }
