@@ -60,6 +60,7 @@ public class SightingController {
     
     @PostMapping("addSighting")
     public String addSighting(HttpServletRequest request) {
+        violations.clear();
         Sighting sighting = service.createSighting(request);
         
         Validator validate = Validation.buildDefaultValidatorFactory().getValidator();
@@ -73,11 +74,12 @@ public class SightingController {
     
     @GetMapping("editSighting")
     public String editSighting(HttpServletRequest request, Model model) {
+        violations.clear();
         model.addAttribute("errors", violations);
         int id = Integer.parseInt(request.getParameter("id"));
         Sighting sighting = service.getSightingById(id);
-
         model.addAttribute("sighting", sighting);
+        
         return "editSighting";
     }
 
@@ -92,8 +94,9 @@ public class SightingController {
         
         if(violations.isEmpty()){
             service.updateSighting(sighting);
+            
         }
+        
         return "redirect:/sightings";
     }
-
 }

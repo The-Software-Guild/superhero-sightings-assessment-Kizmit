@@ -9,6 +9,7 @@ package com.jdm.superherosightings.entities;
 
 import java.util.List;
 import java.util.Objects;
+import javax.validation.constraints.NotBlank;
 
 
 /**
@@ -19,7 +20,17 @@ import java.util.Objects;
  */
 public class Location {
     private int locationId;
-    private String name, city, state, address, coordinates, description;
+    
+    @NotBlank(message = "Must enter a name for the location")
+    private String name;
+    
+    @NotBlank(message = "Must enter a city for the location")
+    private String city;
+    
+    @NotBlank(message = "Must enter a state for the location")
+    private String state; 
+    
+    private String address, coordinates, description;
     private List<Sighting> sightings;
     
 

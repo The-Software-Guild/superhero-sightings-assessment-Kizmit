@@ -47,7 +47,7 @@
                                 <td th:text="${location.description}">Description</td>
                                 <!--Sightings at location? organizations at location?-->
                                 <td><!--<a href="#" th:href="@{/editTeacher(id=${teacher.id})}">-->Edit</a></td>
-                                <td><a href="#" th:href="@{/deleteLocation(id=${location.locationId})}">Delete</a></td>
+                                <td><a href="#" th:href="@{/deleteLocation(id=${location.locationId})}" onclick = "return confirm('Are you sure?')">Delete</a></td>
                             </tr>
                         </tbody>
                     </table>

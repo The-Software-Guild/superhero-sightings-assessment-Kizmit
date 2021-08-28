@@ -235,24 +235,29 @@ public class ServiceLayer {
         orgDao.editOrganization(organization);
     }
 
-    public SuperPerson createSuperPerson(HttpServletRequest request) {
+    public SuperPerson createSuperPerson(HttpServletRequest request, boolean isVillain) {
         SuperPerson superPerson = new SuperPerson();
         String name = request.getParameter("superPersonName");
-        String description = request.getParameter("superPersonDescription");
-        boolean isVillain = Boolean.parseBoolean(request.getParameter("isVillain"));
-        String organizationNames[] = request.getParameterValues("organizationNames");
-        String powerNames[] = request.getParameterValues("powerNames");
+        String description = request.getParameter("superPersonDesc");
+        
+        String[] organizationNames = request.getParameterValues("organizationNames");
+        String[] powerNames = request.getParameterValues("powerNames");
         
         List<Organization> organizations = new ArrayList<>();
         List<Power> powers = new ArrayList<>();
         
+        
         for(String orgName : organizationNames){
             organizations.add(orgDao.getOrganizationByName(orgName));
-        }
+        }       
+        
+        
         
         for(String powerName : powerNames){
             powers.add(powerDao.getPowerByName(powerName));
         }
+        
+        
           
         superPerson.setName(name);
         superPerson.setDescription(description);
@@ -276,8 +281,7 @@ public class ServiceLayer {
 
     public SuperPerson editSuperPerson(SuperPerson superPerson, HttpServletRequest request) {
         String name = request.getParameter("superPersonName");
-        String description = request.getParameter("superPersonDescription");
-        boolean isVillain = Boolean.parseBoolean(request.getParameter("isVillain"));
+        String description = request.getParameter("superPersonDesc");
         String organizationNames[] = request.getParameterValues("organizationNames");
         String powerNames[] = request.getParameterValues("powerNames");
         
@@ -294,7 +298,6 @@ public class ServiceLayer {
           
         superPerson.setName(name);
         superPerson.setDescription(description);
-        superPerson.setVillain(isVillain);
         superPerson.setOrganizations(organizations);
         superPerson.setPowers(powers);
         
@@ -348,26 +351,53 @@ public class ServiceLayer {
     }
 
     public Location createLocation(HttpServletRequest request) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Location location = new Location();
+        String name = request.getParameter("locationName");
+        String city = request.getParameter("locationCity");
+        String state = request.getParameter("locationState");
+        String address = request.getParameter("locationAddress");
+        String coord = request.getParameter("locationCoord");
+        String description = request.getParameter("locationDesc");
+        
+        location.setName(name);
+        location.setCity(city);
+        location.setState(state);
+        location.setAddress(address);
+        location.setCoordinates(coord);
+        location.setDescription(description);
+        return location;
     }
 
     public void addLocation(Location location) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        locDao.addLocation(location);
     }
 
     public void deleteLocationById(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        locDao.deleteLocationById(id);
     }
 
     public Location getLocationById(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return locDao.getLocationById(id);
     }
 
     public Location editLocation(Location location, HttpServletRequest request) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String name = request.getParameter("locationName");
+        String city = request.getParameter("locationCity");
+        String state = request.getParameter("locationState");
+        String address = request.getParameter("locationAddress");
+        String coord = request.getParameter("locationCoord");
+        String description = request.getParameter("locationDesc");
+        
+        location.setName(name);
+        location.setCity(city);
+        location.setState(state);
+        location.setAddress(address);
+        location.setCoordinates(coord);
+        location.setDescription(description);    
+        return location;
     }
 
     public void updateLocation(Location location) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        locDao.editLocation(location);
     }
 }

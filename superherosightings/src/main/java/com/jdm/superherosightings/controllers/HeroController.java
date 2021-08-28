@@ -42,14 +42,18 @@ public class HeroController {
     
     @GetMapping("heroes")
     public String displayHeroes(Model model){
+        model.addAttribute("errors", violations);
         List<SuperPerson> heroes = service.getHeroes();
         model.addAttribute("heroes", heroes);
+        model.addAttribute("powers", service.getPowers());
+        model.addAttribute("organizations", service.getOrganizations());
         return "heroes";
     }
     
     @PostMapping("addHero")
-    public String addHero(HttpServletRequest request){
-        SuperPerson hero = service.createSuperPerson(request);
+    public String addHero(HttpServletRequest request, Model model){
+        violations.clear();
+        SuperPerson hero = service.createSuperPerson(request, false);
         
         Validator validate = Validation.buildDefaultValidatorFactory().getValidator();
         violations = validate.validate(hero);
@@ -57,18 +61,19 @@ public class HeroController {
         if(violations.isEmpty()) {
             service.addSuperPerson(hero);
         }
-        return "redirect:/heros";
+        return "redirect:/heroes";
     }
     
     @GetMapping("deleteHero")
     public String deleteHero(HttpServletRequest request){
         int id = Integer.parseInt(request.getParameter("id"));
         service.deleteSuperPersonById(id);
-        return "redirect:/heros";
+        return "redirect:/heroes";
     }
     
     @GetMapping("editHero")
     public String editHero(HttpServletRequest request, Model model) {
+        violations.clear();
         model.addAttribute("errors", violations);
         int id = Integer.parseInt(request.getParameter("id"));
         SuperPerson hero = service.getSuperPersonById(id);
@@ -89,7 +94,7 @@ public class HeroController {
         if(violations.isEmpty()){
             service.updateSuperPerson(hero);
         }
-        return "redirect:/heros";
+        return "redirect:/heroes";
     }    
     
 }

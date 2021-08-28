@@ -7,6 +7,7 @@
 package com.jdm.superherosightings.controllers;
 
 import com.jdm.superherosightings.dao.SightingDao;
+import com.jdm.superherosightings.entities.Power;
 import com.jdm.superherosightings.entities.SuperPerson;
 import com.jdm.superherosightings.service.ServiceLayer;
 import java.util.HashSet;
@@ -41,15 +42,18 @@ public class VillainController {
     
     @GetMapping("villains")
     public String displayVillains(Model model){
+        model.addAttribute("errors", violations);
         List<SuperPerson> villains = service.getVillains();
         model.addAttribute("villains", villains);
+        model.addAttribute("powers", service.getPowers());
+        model.addAttribute("organizations", service.getOrganizations());
         return "villains";
     }
 
     @PostMapping("addVillain")
     public String addVillain(HttpServletRequest request){
-        SuperPerson villain = service.createSuperPerson(request);
-        
+        violations.clear();
+        SuperPerson villain = service.createSuperPerson(request, true);
         Validator validate = Validation.buildDefaultValidatorFactory().getValidator();
         violations = validate.validate(villain);
 
@@ -68,6 +72,7 @@ public class VillainController {
     
     @GetMapping("editVillain")
     public String editVillain(HttpServletRequest request, Model model) {
+        violations.clear();
         model.addAttribute("errors", violations);
         int id = Integer.parseInt(request.getParameter("id"));
         SuperPerson villain = service.getSuperPersonById(id);

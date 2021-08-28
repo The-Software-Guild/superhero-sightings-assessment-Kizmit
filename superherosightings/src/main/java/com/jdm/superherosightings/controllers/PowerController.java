@@ -51,6 +51,7 @@ public class PowerController {
 
     @PostMapping("addPower")
     public String addPower(HttpServletRequest request){
+        violations.clear();
         Power power = service.createPower(request);
         
         Validator validate = Validation.buildDefaultValidatorFactory().getValidator();
@@ -72,6 +73,7 @@ public class PowerController {
     @GetMapping("editPower")
     public String editPower(HttpServletRequest request, Model model) {
         model.addAttribute("errors", violations);
+        
         int id = Integer.parseInt(request.getParameter("id"));
         Power power = service.getPowerById(id);
 

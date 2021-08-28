@@ -50,6 +50,7 @@ public class LocationController {
     
     @PostMapping("addLocation")
     public String addLocation(HttpServletRequest request){
+        violations.clear();
         Location location = service.createLocation(request);
         
         Validator validate = Validation.buildDefaultValidatorFactory().getValidator();
@@ -70,6 +71,7 @@ public class LocationController {
     
     @GetMapping("editLocation")
     public String editLocation(HttpServletRequest request, Model model) {
+        violations.clear();
         model.addAttribute("errors", violations);
         int id = Integer.parseInt(request.getParameter("id"));
         Location location = service.getLocationById(id);
@@ -90,6 +92,8 @@ public class LocationController {
         if(violations.isEmpty()){
             service.updateLocation(location);
         }
+        
         return "redirect:/locations";
+        
     }    
 }
