@@ -108,7 +108,6 @@ public class Organization {
         hash = 31 * hash + Objects.hashCode(this.type);
         hash = 31 * hash + Objects.hashCode(this.description);
         hash = 31 * hash + Objects.hashCode(this.phone);
-        hash = 31 * hash + Objects.hashCode(this.members);
         return hash;
     }
 
@@ -140,9 +139,6 @@ public class Organization {
             return false;
         }
         if (!Objects.equals(this.phone, other.phone)) {
-            return false;
-        }
-        if (!Objects.equals(this.members, other.members)) {
             return false;
         }
         return true;

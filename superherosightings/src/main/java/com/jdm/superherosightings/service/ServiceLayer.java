@@ -17,11 +17,9 @@ import com.jdm.superherosightings.entities.Power;
 import com.jdm.superherosightings.entities.Sighting;
 import com.jdm.superherosightings.entities.SuperPerson;
 import java.sql.Date;
-import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -183,14 +181,18 @@ public class ServiceLayer {
 
     public Organization createOrganization(HttpServletRequest request) {
         Organization organization = new Organization();
+        
+
         String locationName = request.getParameter("locationName");
         String organizationType = request.getParameter("organizationType");
         String organizationName = request.getParameter("organizationName");
         String organizationDesc = request.getParameter("organizationDesc");
         String organizationPhone = request.getParameter("organizationPhone");
         
-        organization.setLocation(locDao.getLocationByName(locationName));
-        organization.setLocationId(organization.getLocation().getLocationId());
+        if(locDao.getLocationByName(locationName) != null){
+            organization.setLocation(locDao.getLocationByName(locationName));
+            organization.setLocationId(organization.getLocation().getLocationId());
+        }
         organization.setType(organizationType);
         organization.setName(organizationName);
         organization.setDescription(organizationDesc);
@@ -218,8 +220,10 @@ public class ServiceLayer {
         String organizationDesc = request.getParameter("organizationDesc");
         String organizationPhone = request.getParameter("organizationPhone");
         
-        organization.setLocation(locDao.getLocationByName(locationName));
-        organization.setLocationId(organization.getLocation().getLocationId());
+         if(locDao.getLocationByName(locationName) != null){
+            organization.setLocation(locDao.getLocationByName(locationName));
+            organization.setLocationId(organization.getLocation().getLocationId());
+         }
         organization.setType(organizationType);
         organization.setName(organizationName);
         organization.setDescription(organizationDesc);
@@ -271,7 +275,30 @@ public class ServiceLayer {
     }
 
     public SuperPerson editSuperPerson(SuperPerson superPerson, HttpServletRequest request) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String name = request.getParameter("superPersonName");
+        String description = request.getParameter("superPersonDescription");
+        boolean isVillain = Boolean.parseBoolean(request.getParameter("isVillain"));
+        String organizationNames[] = request.getParameterValues("organizationNames");
+        String powerNames[] = request.getParameterValues("powerNames");
+        
+        List<Organization> organizations = new ArrayList<>();
+        List<Power> powers = new ArrayList<>();
+        
+        for(String orgName : organizationNames){
+            organizations.add(orgDao.getOrganizationByName(orgName));
+        }
+        
+        for(String powerName : powerNames){
+            powers.add(powerDao.getPowerByName(powerName));
+        }
+          
+        superPerson.setName(name);
+        superPerson.setDescription(description);
+        superPerson.setVillain(isVillain);
+        superPerson.setOrganizations(organizations);
+        superPerson.setPowers(powers);
+        
+        return superPerson;
     }
 
     public void updateSuperPerson(SuperPerson superPerson) {
@@ -279,27 +306,45 @@ public class ServiceLayer {
     }
 
     public Power createPower(HttpServletRequest request) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Power power = new Power();
+        String name = request.getParameter("powerName");
+        String description = request.getParameter("powerDesc");
+        if(name != null){
+            power.setName(name);
+        }
+        if(description != null){
+            power.setDescription(description);
+        }
+        
+        return power; 
     }
 
     public void addPower(Power power) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        powerDao.addPower(power);
     }
 
     public void deletePowerById(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        powerDao.deletePowerById(id);
     }
 
     public Power getPowerById(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return powerDao.getPowerById(id);
     }
 
     public Power editPower(Power power, HttpServletRequest request) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+        String name = request.getParameter("powerName");
+        String description = request.getParameter("powerDesc");
+        if(name != null){
+            power.setName(name);
+        }
+        if(description != null){
+            power.setDescription(description);
+        }
+        
+        return power;     }
 
     public void updatePower(Power power) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        powerDao.editPower(power);
     }
     
     

@@ -1,6 +1,7 @@
 package com.jdm.superherosightings.dao;
 
 import com.jdm.superherosightings.entities.Organization;
+import com.jdm.superherosightings.entities.SuperPerson;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -41,8 +42,10 @@ public class OrganizationDaoDbImpl implements OrganizationDao {
     public List<Organization> getAllOrganizations() {
         final String GET_ALL_ORGANIZATIONS = "SELECT * FROM organization";
         List<Organization> organizations = jdbc.query(GET_ALL_ORGANIZATIONS, new OrganizationMapper());
+        
         organizations.forEach(org -> {
             org = assosciateLocation(org);
+            org.setMembers(assosciateSupers(org.getOrganizationId()));
         });
         return organizations;
     }
@@ -93,6 +96,14 @@ public class OrganizationDaoDbImpl implements OrganizationDao {
         Organization organization = jdbc.queryForObject(GET_ORG_BY_NAME, new OrganizationMapper(), orgName);
         organization = assosciateLocation(organization);
         return organization;
+    }
+
+    private List<SuperPerson> assosciateSupers(int organizationId) {
+        final String GET_SUPERS_IN_ORG = "SELECT p.* FROM organizationsuperperson osp "
+                + "JOIN superperson p ON p.superPersonId = osp.superPersonId "
+                + "WHERE organizationId = ?";
+        List<SuperPerson> superPersons = jdbc.query(GET_SUPERS_IN_ORG, new SuperPersonDaoDbImpl.SuperPersonMapper(), organizationId);
+        return superPersons;
     }
     
     
