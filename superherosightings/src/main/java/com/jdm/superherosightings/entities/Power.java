@@ -7,6 +7,9 @@
 package com.jdm.superherosightings.entities;
 
 import java.util.Objects;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 
 /**
  *
@@ -16,7 +19,14 @@ import java.util.Objects;
  */
 public class Power {
     private int powerId;
-    private String name, description;
+    
+    @NotBlank(message = "Must enter a value for name")
+    @Size(max = 50, message = "Name must be less than 50 characters")
+    private String name;
+    
+    @NotBlank(message = "Must enter a value for description")
+    @Size(max = 100, message = "Description must be less than 100 characters")
+    private String description;
 
     public int getPowerId() {
         return powerId;

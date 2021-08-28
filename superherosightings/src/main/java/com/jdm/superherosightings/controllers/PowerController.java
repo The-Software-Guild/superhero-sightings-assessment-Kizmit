@@ -42,6 +42,7 @@ public class PowerController {
     
     @GetMapping("powers")
     public String displayPowers(Model model){
+        model.addAttribute("errors", violations);
         List<Power> powers = service.getPowers();
         model.addAttribute("powers", powers);
         return "powers";

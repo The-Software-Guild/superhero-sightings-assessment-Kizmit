@@ -47,10 +47,71 @@
                                 <td th:text="${location.description}">Description</td>
                                 <!--Sightings at location? organizations at location?-->
                                 <td><!--<a href="#" th:href="@{/editTeacher(id=${teacher.id})}">-->Edit</a></td>
-                                <td><!--<a href="#" th:href="@{/deleteTeacher(id=${teacher.id})}">-->Delete</a></td>
+                                <td><a href="#" th:href="@{/deleteLocation(id=${location.locationId})}">Delete</a></td>
                             </tr>
                         </tbody>
                     </table>
+                </div>
+            </div>
+            <div class="row m-4 border border-dark">
+                <div class="col-12 m-1 text-center" th:if="${!errors.isEmpty()}">
+                    <p class="alert alert-danger" th:each="error : ${errors}" th:text="${error.message}">Error message</p>
+                </div>
+                <div class="col-3 text-center m-3">
+                    <span class="h3">Add Location</span>
+                </div>
+                <div class="col-7 text-center m-3">
+                    <form action="addLocation" method="POST">                
+                        <div class="form-group row">
+                            <label for="locationName" class="col-3 col-form-label">
+                                Name:</label>
+                            <div class="col-9">
+                                <input type="text" name="locationName" 
+                                       id="locationName" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="locationCity" class="col-3 col-form-label">
+                                City:</label>
+                            <div class="col-9">
+                                <input type="text" name="locationCity" 
+                                       id="locationCity" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="locationState" class="col-3 col-form-label">
+                                State:</label>
+                            <div class="col-9">
+                                <input type="text" name="locationState" 
+                                       id="locationState" class="form-control"/>
+                            </div>
+                        </div>    
+                        <div class="form-group row">
+                            <label for="locationAddress" class="col-3 col-form-label">
+                                Address:</label>
+                            <div class="col-9">
+                                <input type="text" name="locationAddress" 
+                                       id="locationAddress" class="form-control"/>
+                            </div>
+                        </div>      
+                        <div class="form-group row">
+                            <label for="locationCoord" class="col-3 col-form-label">
+                                Coordinates:</label>
+                            <div class="col-9">
+                                <input type="text" name="locationCoord" 
+                                       id="locationCoord" class="form-control"/>
+                            </div>
+                        </div>      
+                        <div class="form-group row">
+                            <label for="locationDesc" class="col-3 col-form-label">
+                                Description:</label>
+                            <div class="col-9">
+                                <input type="text" name="locationDesc" 
+                                       id="locationDesc" class="form-control"/>
+                            </div>
+                        </div>  
+                        <button type="submit" class="btn btn-primary">Add Location</button>
+                    </form>
                 </div>
             </div>
         <div class="row">
