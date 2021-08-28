@@ -23,10 +23,10 @@ import javax.validation.constraints.NotNull;
 public class Sighting {
     private int sightingId, superPersonId, locationId;
    
-    @NotNull(message = "Super person must exist in records")
+    @NotNull(message = "Invalid super person")
     private SuperPerson superPerson;
    
-    @NotNull(message = "Location must exist in records")
+    @NotNull(message = "Invalid location")
     private Location location;
     
     @NotNull(message = "Must enter a value for date")

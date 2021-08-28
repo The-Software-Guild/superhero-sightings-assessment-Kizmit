@@ -44,14 +44,17 @@
                                 <td th:text="${organization.description}">Description</td>
                                 <td th:text="${organization.phone}">Description</td>
                                 <!--Organization members, location-->
-                                <td><!--<a href="#" th:href="@{/editTeacher(id=${teacher.id})}">-->Edit</a></td>
-                                <td><!--<a href="#" th:href="@{/deleteTeacher(id=${teacher.id})}">-->Delete</a></td>
+                                <td><a href="#" th:href="@{/editOrganization(id=${organization.organizationId})}">Edit</a></td>
+                                <td><a href="#" th:href="@{/deleteOrganization(id=${organization.organizationId})}" onclick = "return confirm('Are you sure?')">Delete</a></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
             <div class="row m-4 border border-dark">
+                <div class="col-12 m-1 text-center" th:if="${!errors.isEmpty()}">
+                    <p class="alert alert-danger" th:each="error : ${errors}" th:text="${error.message}">Error message</p>
+                </div>
                 <div class="col-3 text-center m-3">
                     <span class="h3">Add Organization</span>
                 </div>
@@ -69,7 +72,7 @@
                             <label for="organizationType" class="col-3 col-form-label">
                                 Type:</label>
                             <div class="col-9">
-                                <select>
+                                <select id = "organizationType" name = "organizationType">
                                     <option value ="Hero">Hero</option>
                                     <option value ="Villain">Villain</option>
                                 </select>

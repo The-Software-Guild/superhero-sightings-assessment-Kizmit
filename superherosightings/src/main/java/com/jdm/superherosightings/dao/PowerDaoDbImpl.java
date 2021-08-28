@@ -73,6 +73,14 @@ public class PowerDaoDbImpl implements PowerDao {
         final String UPDATE_POWER = "UPDATE power SET powerName = ?, powerDesc = ? WHERE powerId = ?";
         jdbc.update(UPDATE_POWER, power.getName(), power.getDescription(), power.getPowerId());
     }
+
+    @Override
+    public Power getPowerByName(String powerName) {
+        final String GET_POWER_BY_NAME = "SELECT * FROM power WHERE powerName = ?";
+        Power power = jdbc.queryForObject(GET_POWER_BY_NAME, new PowerMapper(), powerName);
+        return power;    
+    }
+    
     private static final class PowerMapper implements RowMapper<Power> {
 
         @Override

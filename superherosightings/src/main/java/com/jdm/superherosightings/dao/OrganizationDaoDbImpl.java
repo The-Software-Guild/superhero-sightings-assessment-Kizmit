@@ -29,6 +29,7 @@ public class OrganizationDaoDbImpl implements OrganizationDao {
         try {
             final String SELECT_ORGANIZATION_BY_ID = "SELECT * FROM organization WHERE organizationId = ?";
             Organization organization = jdbc.queryForObject(SELECT_ORGANIZATION_BY_ID, new OrganizationMapper(), organizationId);
+            organization = assosciateLocation(organization);
             return organization;
         } 
         catch(DataAccessException ex) {
@@ -39,7 +40,11 @@ public class OrganizationDaoDbImpl implements OrganizationDao {
     @Override
     public List<Organization> getAllOrganizations() {
         final String GET_ALL_ORGANIZATIONS = "SELECT * FROM organization";
-        return jdbc.query(GET_ALL_ORGANIZATIONS, new OrganizationMapper());
+        List<Organization> organizations = jdbc.query(GET_ALL_ORGANIZATIONS, new OrganizationMapper());
+        organizations.forEach(org -> {
+            org = assosciateLocation(org);
+        });
+        return organizations;
     }
 
     @Override
@@ -74,6 +79,12 @@ public class OrganizationDaoDbImpl implements OrganizationDao {
         jdbc.update(UPDATE_LOCATION, organization.getLocationId(), organization.getType(), 
                 organization.getName(), organization.getDescription(), organization.getPhone(), 
                 organization.getOrganizationId());
+    }
+
+    private Organization assosciateLocation(Organization organization) {
+        final String GET_LOCATION_ORGANIZATION = "SELECT * FROM location WHERE locationId = ?";
+        organization.setLocation(jdbc.queryForObject(GET_LOCATION_ORGANIZATION, new LocationDaoDbImpl.LocationMapper(), organization.getLocationId()));
+        return organization;
     }
     
     

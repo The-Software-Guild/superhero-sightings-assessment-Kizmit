@@ -7,10 +7,7 @@
 package com.jdm.superherosightings.controllers;
 
 import com.jdm.superherosightings.dao.SightingDao;
-import com.jdm.superherosightings.entities.Location;
-import com.jdm.superherosightings.entities.Power;
 import com.jdm.superherosightings.entities.Sighting;
-import com.jdm.superherosightings.entities.SuperPerson;
 import com.jdm.superherosightings.service.ServiceLayer;
 import java.util.HashSet;
 import java.util.List;
@@ -46,7 +43,6 @@ public class SightingController {
     
     Set<ConstraintViolation<Sighting>> violations = new HashSet<>();
     
-    
     @GetMapping("sightings")
     public String displaySightings(Model model){
         model.addAttribute("errors", violations);
@@ -54,10 +50,6 @@ public class SightingController {
         model.addAttribute("sightings", sightings);
         return "sightings";
     }
-    
-
-    
-
     
     @GetMapping("deleteSighting")
     public String deleteSighting(HttpServletRequest request) {
@@ -68,10 +60,7 @@ public class SightingController {
     
     @PostMapping("addSighting")
     public String addSighting(HttpServletRequest request) {
-        String superPersonName = request.getParameter("superPersonName");
-        String locationName = request.getParameter("locationName");
-        
-        Sighting sighting = service.createSighting(superPersonName, locationName);
+        Sighting sighting = service.createSighting(request);
         
         Validator validate = Validation.buildDefaultValidatorFactory().getValidator();
         violations = validate.validate(sighting);
@@ -84,6 +73,7 @@ public class SightingController {
     
     @GetMapping("editSighting")
     public String editSighting(HttpServletRequest request, Model model) {
+        model.addAttribute("errors", violations);
         int id = Integer.parseInt(request.getParameter("id"));
         Sighting sighting = service.getSightingById(id);
 

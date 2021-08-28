@@ -2,6 +2,10 @@ package com.jdm.superherosightings.entities;
 
 import java.util.List;
 import java.util.Objects;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 
 /**
  *
@@ -13,8 +17,31 @@ public class Organization {
 
     private int organizationId, locationId;
 
-    private String name, type, description, phone;
+    @NotBlank(message = "Must enter a value for name")
+    @Size(max = 50, message = "Name must be less than 50 characters")
+    private String name;
+    
+    @NotNull(message = "Type is somehow null")
+    private String type;
+
+    @Size(max = 100, message="Description must be less than 100 characters")
+    private String description; 
+    
+    @Size(max = 15, message = "Phone number must contain no more than 15 digits")
+    private String phone;
+    
+    @NotNull(message = "Must enter a valid location")
+    private Location location;
+    
     private List<SuperPerson> members;
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
 
     public int getOrganizationId() {
         return organizationId;

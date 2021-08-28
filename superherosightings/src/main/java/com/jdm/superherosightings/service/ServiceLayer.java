@@ -126,8 +126,10 @@ public class ServiceLayer {
         sightingDao.addSighting(sighting);
     }
 
-    public Sighting createSighting(String superPersonName, String locationName) {
+    public Sighting createSighting(HttpServletRequest request) {
         Sighting sighting = new Sighting();
+        String superPersonName = request.getParameter("superPersonName");
+        String locationName = request.getParameter("locationName");
         
         SuperPerson superPerson = superPersonDao.getSuperPersonByName(superPersonName);
         Location location = locDao.getLocationByName(locationName);
@@ -154,7 +156,11 @@ public class ServiceLayer {
         
         SuperPerson superPerson = superPersonDao.getSuperPersonByName(request.getParameter("superPersonName"));
         Location location = locDao.getLocationByName(request.getParameter("locationName"));
-        Date date = Date.valueOf(request.getParameter("dateTime"));
+        Date date = null;
+        if(request.getParameter("dateTime").equals("^\\d{4}\\-(0[1-9]|1[012])\\-(0[1-9]|[12][0-9]|3[01])$")){
+            date = Date.valueOf(request.getParameter("dateTime"));
+        }
+        
         if(location != null){
             sighting.setLocation(location);
             sighting.setLocationId(location.getLocationId());
@@ -171,6 +177,80 @@ public class ServiceLayer {
 
     public void updateSighting(Sighting sighting) {
         sightingDao.editSighting(sighting);
+    }
+
+    public Organization createOrganization(HttpServletRequest request) {
+        Organization organization = new Organization();
+        String locationName = request.getParameter("locationName");
+        String organizationType = request.getParameter("organizationType");
+        String organizationName = request.getParameter("organizationName");
+        String organizationDesc = request.getParameter("organizationDesc");
+        String organizationPhone = request.getParameter("organizationPhone");
+        
+        organization.setLocation(locDao.getLocationByName(locationName));
+        organization.setLocationId(organization.getLocation().getLocationId());
+        organization.setType(organizationType);
+        organization.setName(organizationName);
+        organization.setDescription(organizationDesc);
+        organization.setPhone(organizationPhone);
+        
+        return organization;
+    }
+
+    public void addOrganization(Organization organization) {
+        orgDao.addOrganization(organization);
+    }
+
+    public void deleteOrganizationById(int id) {
+        orgDao.deleteOrganizationById(id);
+    }
+
+    public Organization getOrganizationById(int id) {
+        return orgDao.getOrganizationById(id);
+    }
+
+    public Organization editOrganization(Organization organization, HttpServletRequest request) {
+        String locationName = request.getParameter("locationName");
+        String organizationType = request.getParameter("organizationType");
+        String organizationName = request.getParameter("organizationName");
+        String organizationDesc = request.getParameter("organizationDesc");
+        String organizationPhone = request.getParameter("organizationPhone");
+        
+        organization.setLocation(locDao.getLocationByName(locationName));
+        organization.setLocationId(organization.getLocation().getLocationId());
+        organization.setType(organizationType);
+        organization.setName(organizationName);
+        organization.setDescription(organizationDesc);
+        organization.setPhone(organizationPhone);
+        return organization;
+    }
+
+    public void updateOrganization(Organization organization) {
+        orgDao.editOrganization(organization);
+    }
+
+    public SuperPerson createSuperPerson(HttpServletRequest request) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void addSuperPerson(SuperPerson hero) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void deleteSuperPersonById(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public SuperPerson getSuperPersonById(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public SuperPerson editSuperPerson(SuperPerson hero, HttpServletRequest request) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void updateSuperPerson(SuperPerson hero) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     
