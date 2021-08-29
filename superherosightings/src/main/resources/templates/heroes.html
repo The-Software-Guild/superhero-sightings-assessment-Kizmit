@@ -79,25 +79,25 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="powerNames" class="col-3 col-form-label">
+                            <label for="superPersonPowers" class="col-3 col-form-label">
                                 Powers:</label>
                             <div class="col-9">
-                                <select class="form-control selectpicker" th:field="*{powers}" id="powerNames" name="powerNames" multiple>
+                                <select class="form-control selectpicker" id="superPersonPowers" name="superPersonPowers" multiple>
                                     <option th:each="power : ${powers}"
-                                            th:value="${power.name}"
+                                            th:value="${power.powerId}"
                                             th:text="${power.name}">power
                                     </option>
                                 </select>                     
                             </div>
                         </div>    
                         <div class="form-group row">
-                            <label for="organizationNames" class="col-3 col-form-label">
+                            <label for="superPersonOrgs" class="col-3 col-form-label">
                                 Organization:</label>
                             <div class="col-9">
-                                <select class="form-control selectpicker" th:field="*{organizations}" id="organizationNames" name="organizationNames" multiple>
+                                <select class="form-control selectpicker" id="superPersonOrgs" name="superPersonOrgs" multiple>
 
                                     <option th:each="org : ${organizations}"
-                                            th:value="${org.name}"
+                                            th:value="${org.organizationId}"
                                             th:text="${org.name}">power
                                     </option>
                                 </select> 

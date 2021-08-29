@@ -7,9 +7,11 @@
 package com.jdm.superherosightings.controllers;
 
 import com.jdm.superherosightings.dao.SightingDao;
+import com.jdm.superherosightings.entities.Organization;
 import com.jdm.superherosightings.entities.Power;
 import com.jdm.superherosightings.entities.SuperPerson;
 import com.jdm.superherosightings.service.ServiceLayer;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -22,6 +24,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
@@ -51,9 +54,29 @@ public class VillainController {
     }
 
     @PostMapping("addVillain")
-    public String addVillain(HttpServletRequest request){
+    public String addVillain(@RequestParam(value = "superPersonName", required = true) String name,
+                             @RequestParam(value = "superPersonDesc", required = false) String description,
+                             @RequestParam(value = "superPersonPowers", required = false) int[] powerIds,
+                             @RequestParam(value = "superPersonOrgs", required = false) int[] organizationIds
+                             ){
         violations.clear();
-        SuperPerson villain = service.createSuperPerson(request, true);
+        SuperPerson villain = new SuperPerson(name, description, true);
+        List<Power> powers = new ArrayList<>();
+        if(powerIds != null){
+            for(int powerId: powerIds){
+                powers.add(service.getPowerById(powerId));
+            }
+            villain.setPowers(powers);
+        }
+        if(organizationIds != null){
+            List<Organization> organizations = new ArrayList<>();
+            for(int orgId: organizationIds){
+                organizations.add(service.getOrganizationById(orgId));
+            }
+            villain.setOrganizations(organizations);
+        }
+
+        
         Validator validate = Validation.buildDefaultValidatorFactory().getValidator();
         violations = validate.validate(villain);
 

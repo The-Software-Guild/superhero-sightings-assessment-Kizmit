@@ -31,6 +31,7 @@
                                 <th>Name</th>
                                 <th>Type</th>
                                 <th>Description</th>
+                                <th>Location</th>
                                 <th>Phone Number</th>
                                 <th></th>
                                 <th></th>
@@ -42,7 +43,8 @@
                                 <td th:text="${organization.name}">Name</td>
                                 <td th:text="${organization.type}">Type</td>
                                 <td th:text="${organization.description}">Description</td>
-                                <td th:text="${organization.phone}">Description</td>
+                                <td th:text="${organization.location.name}">Description</td>
+                                <td th:text="${organization.phone}">Phone</td>
                                 <!--Organization members, location-->
                                 <td><a href="#" th:href="@{/editOrganization(id=${organization.organizationId})}">Edit</a></td>
                                 <td><a href="#" th:href="@{/deleteOrganization(id=${organization.organizationId})}" onclick = "return confirm('Are you sure?')">Delete</a></td>

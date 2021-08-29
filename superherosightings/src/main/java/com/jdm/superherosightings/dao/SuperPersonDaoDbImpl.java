@@ -70,6 +70,19 @@ public class SuperPersonDaoDbImpl implements SuperPersonDao {
         jdbc.update(INSERT_SUPER_PERSON, superPerson.getName(), superPerson.getDescription(), superPerson.isVillain());
         int newId = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
         superPerson.setSuperPersonId(newId);
+        final String INSERT_SUPER_PERSON_POWERS = "INSERT INTO superpersonpower(powerId, superPersonId) VALUES (?,?)";
+        final String INSERT_SUPER_PERSON_ORGANIZATIONS = "INSERT INTO organizationsuperperson(organizationId, superPersonId) VALUES (?,?)";
+        if(superPerson.getPowers() != null){
+            superPerson.getPowers().forEach(power -> {
+                jdbc.update(INSERT_SUPER_PERSON_POWERS, power.getPowerId(), superPerson.getSuperPersonId());
+            });
+        }
+        if(superPerson.getOrganizations() != null){
+            superPerson.getOrganizations().forEach(org -> {
+                jdbc.update(INSERT_SUPER_PERSON_ORGANIZATIONS, org.getOrganizationId(), superPerson.getSuperPersonId());
+            });
+        }
+        
         return superPerson;    
     }
 

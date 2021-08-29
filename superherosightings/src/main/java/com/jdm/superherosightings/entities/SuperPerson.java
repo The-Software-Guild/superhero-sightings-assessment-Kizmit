@@ -21,6 +21,12 @@ public class SuperPerson {
         organizationNames = "";
         powerNames = "";
     }
+
+    public SuperPerson(String name, String description, boolean villain) {
+        this.name = name;
+        this.description = description;
+        this.villain = villain;
+    }
     public int getSuperPersonId() {
         return superPersonId;
     }

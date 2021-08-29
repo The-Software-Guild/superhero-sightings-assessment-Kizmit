@@ -56,7 +56,7 @@ public class ServiceLayer {
     Set<ConstraintViolation<Sighting>> violations = new HashSet<>();
     public List<Sighting> getSightings() {
         List<Sighting> sightings = sightingDao.getAllVillainSightings();
-        
+        sightings.addAll(sightingDao.getAllHeroSightings());
         sightings.forEach(sighting ->{
             sighting.setSuperPerson(superPersonDao.getSuperById(sighting.getSuperPersonId()));
             sighting.setLocation(locDao.getLocationById(sighting.getLocationId()));
@@ -233,38 +233,6 @@ public class ServiceLayer {
 
     public void updateOrganization(Organization organization) {
         orgDao.editOrganization(organization);
-    }
-
-    public SuperPerson createSuperPerson(HttpServletRequest request, boolean isVillain) {
-        SuperPerson superPerson = new SuperPerson();
-        String name = request.getParameter("superPersonName");
-        String description = request.getParameter("superPersonDesc");
-        
-        String[] organizationNames = request.getParameterValues("organizationNames");
-        String[] powerNames = request.getParameterValues("powerNames");
-        
-        List<Organization> organizations = new ArrayList<>();
-        List<Power> powers = new ArrayList<>();
-        
-        
-        for(String orgName : organizationNames){
-            organizations.add(orgDao.getOrganizationByName(orgName));
-        }       
-        
-        
-        
-        for(String powerName : powerNames){
-            powers.add(powerDao.getPowerByName(powerName));
-        }
-        
-        
-          
-        superPerson.setName(name);
-        superPerson.setDescription(description);
-        superPerson.setVillain(isVillain);
-        superPerson.setOrganizations(organizations);
-        superPerson.setPowers(powers);
-        return superPerson;
     }
 
     public void addSuperPerson(SuperPerson superPerson) {
