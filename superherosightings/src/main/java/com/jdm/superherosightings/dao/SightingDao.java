@@ -22,4 +22,6 @@ public interface SightingDao {
     void deleteSightingById(int heroSightingId); //boolean for verification?
     void editSighting(Sighting heroSighting);
     public List<Sighting> getAllSightingsAtLocationDate(int locationId, LocalDate date);
+
+    public List<Sighting> getSightingsPreview();
 }

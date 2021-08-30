@@ -11,53 +11,57 @@
     <title>Super Hero Sightings</title>
   </head>
   <body>
-    <!-- Main -->
+    <!-- Main Body of Page -->
     <div class="container">
-        <div class="row m-4 border border-dark">
-            <div class="col-12 m-1 text-center" th:if="${!errors.isEmpty()}">
-                <p class="alert alert-danger" th:each="error : ${errors}" th:text="${error.message}">Error message</p>
-            </div>
-            <div class="col-3 text-center m-3">
-                <span class="h3">Edit Sighting</span>
-            </div>
-            <div class="col-7 text-center m-3">
-                <form action="editSighting" method="POST">
-                    <div class="form-group row">
-                        <label for="superPersonName" class="col-3 col-form-label">
-                            Name</label>
-                        <div class="col-9">
-                            <input type="text" name="superPersonName" id="superPersonName" 
-                                   class="form-control" th:value="${sighting.superPerson.name}"/>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="locaionName" class="col-3 col-form-label">
-                            Location</label>
-                        <div class="col-9">
-                            <input type="text" name="locationName" id="locationName" 
-                                   class="form-control"  th:value="${sighting.location.name}"/>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="dateTime" class="col-3 col-form-label">
-                            Sighting Date: (yyyy-mm-dd)</label>
-                        <div class="col-9">
-                            <input type="text" name="dateTime" id="dateTime" 
-                                   class="form-control" th:value="${sighting.sightingDate}">
-                        </div>
-                    </div>
-                    <input type="hidden" name="id" th:value="${sighting.sightingId}"/>
-                    <button type="submit" class="btn btn-primary" onclick="return confirm('Are you sure?')">
-                        Update Sighting</button>
-                    <button type="cancel" class="btn btn-primary">Cancel</button>
-                </form>
+        <div class="row m-4">
+            <div class="col text-center border border-dark">
+                <h1>Super Hero Sightings</h1>
             </div>
         </div>
-        <div class="row mt-3">
+        <div class="row m-4">
+            <div class="col text-center border border-dark">
+                <p>Welcome to the Super Hero Sightings web application! All navigation can be found below. On this web app,
+                you can view sightings of super heroes and villains, the details of those super heroes and villains, as well as
+                any associated organizations and locations. You can also add and delete any of the data as necessary. Have fun!</p>
+            </div>
+        </div>
+        <div class="row m-4">
+            <div class="col text-left">
+                <h1>Recent Sightings</h1>
+            </div>
+        </div>
+        <div class="row m-4 border border-dark">
+            <div class="col text-center m-3">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Location</th>
+                            <th>Date</th>
+                            <th>Organization(s)</th>
+                            <th>Power(s)</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="sighting : ${sightings}">
+                            <td th:text="${sighting.superPerson.name}">Name</td>
+                            <td th:text="${sighting.location.name}">Location</td>
+                            <td th:text="${sighting.sightingDate}">Date</td>
+                            <td th:utext="${sighting.organizationNames}">Organization(s)</td>
+                            <td th:utext="${sighting.powerNames}">Power(s)</td>
+                            <td><a href="#" th:href="@{/editSighting(id=${sighting.sightingId})}">Edit</a></td>
+                            <td><a href="#" th:href="@{/deleteSighting(id=${sighting.sightingId})}" onclick="return confirm('Are you sure?')">Delete</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
             <div class="col">
                 <a href="heroes" class="btn btn-outline-primary btn-lg">Heroes</a>
             </div>
-
             <div class="col">
                 <a href="villains" class="btn btn-outline-primary btn-lg">Villains</a>
             </div>
@@ -76,7 +80,7 @@
             <div class="col">
                 <a href="home" class="btn btn-outline-primary btn-lg">Home</a>
             </div>
-       </div>
+        </div>
     </div>
     <!-- End main body -->
     

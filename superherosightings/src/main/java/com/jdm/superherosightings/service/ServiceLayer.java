@@ -368,4 +368,24 @@ public class ServiceLayer {
     public void updateLocation(Location location) {
         locDao.editLocation(location);
     }
+
+    public List<Sighting> getSightingsPreview() {
+        
+        List<Sighting> sightings = sightingDao.getAllVillainSightings();
+        sightings.addAll(sightingDao.getAllHeroSightings());
+        sightings.forEach(sighting ->{
+            sighting.setSuperPerson(superPersonDao.getSuperById(sighting.getSuperPersonId()));
+            sighting.setLocation(locDao.getLocationById(sighting.getLocationId()));
+            sighting.setOrganizations(sighting.getSuperPerson().getOrganizations());
+            sighting.setPowers(sighting.getSuperPerson().getPowers());
+            sighting.getOrganizations().forEach(org -> {
+                    sighting.appendOrgNames(org.getName());
+            });
+            sighting.getPowers().forEach(power -> {
+                    sighting.appendPowerNames(power.getName());
+            });
+        });
+        
+        return sightings;
+    }
 }

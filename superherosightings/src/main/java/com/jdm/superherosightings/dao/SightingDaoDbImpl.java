@@ -120,6 +120,19 @@ public class SightingDaoDbImpl implements SightingDao {
         sighting.setLocation(location);
         return sighting;
     }
+
+    @Override
+    public List<Sighting> getSightingsPreview() {
+        final String GET_SIGHTING_PREVIEW = "SELECT * FROM Sighting ORDER BY sightingTime limit 10";
+        List<Sighting> sightings = jdbc.query(GET_SIGHTING_PREVIEW, new SightingMapper());
+        
+        sightings.forEach(sighting -> {
+            sighting = assosciateSuperPerson(sighting);
+            sighting = assosciateLocation(sighting);
+        });    
+        
+        return sightings;
+    }
     
     public static final class SightingMapper implements RowMapper<Sighting> {
 
